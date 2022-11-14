@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BigMill.Models.PostModel>
+           @using BigMill.Infrastructure;
+@{ string ActionName = "";}
+@foreach (var item in Model)
+{
+    if (item.F_PostsSubCategory_ID == Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["AkhbarPublicID"]))
+    {
+        ActionName = "AkhbarOmumi_Detail";
+    }
+    else if (item.F_PostsSubCategory_ID == Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["AkhbarHozeID"]))
+    {
+        ActionName = "AkhbarHozeEntekhabiye_Detail";
+    }
+
+    <div class="uowl" style="height:350px;">
+        <div class="hover-fx zoom">
+            <img src="~/Content/UplodedImages/PostImages/@item.Content_Two" alt="@item.Content_One" style="height:200px;" />
+            @*@if (item.F_PostsSubCategory_ID == Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["AkhbarPublicID"]))
+            {
+                <a class="fLeft" href="@Url.Action("AkhbarOmumi_Detail", "News", new { PostId = item.ID, PostTittle = item.Content_One.Replace(" ", "-") })" title="@item.Content_One">
+                    <span><i class="icon-file-text"></i></span>
+                </a>
+            }
+            else if (item.F_PostsSubCategory_ID == Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["AkhbarHozeID"]))
+            {
+                <a class="fLeft" href="@Url.Action("AkhbarHozeEntekhabiye_Detail", "News", new { PostId = item.ID, PostTittle = item.Content_One.Replace(" ", "-") })" title="@item.Content_One">
+                    <span><i class="icon-file-text"></i></span>
+                </a>
+            }*@
+            <a class="fLeft" href="@Url.Action(ActionName, "News", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_One">
+                <span><i class="icon-file-text"></i></span>
+            </a>
+            <a class="fRight" href="~/Content/UplodedImages/PostImages/@item.Content_Two" data-gal="photo" title="@item.Content_One">
+                <span><i class="icon-zoom-in"></i></span>
+            </a>
+        </div>
+
+        <div class="detailes" style=" width: 225px;margin-right: auto; margin-left: auto;">
+            <h5><a href="@Url.Action(ActionName, "News", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })">@item.Content_One</a></h5>
+            @item.Content_Three
+        </div>
+
+    </div>
+}

@@ -1,0 +1,13 @@
+﻿
+@if (ViewBag.AddCommentSuccess != null)
+{
+    <div class="notification-box notification-box-success notif-anim" style="width:78%;">
+        <p><i class="icon-ok"></i>@ViewBag.AddCommentSuccess</p>
+    </div>
+}
+@if (ViewBag.AddCommentFailed != null)
+{
+    <div class="notification-box notification-box-error notif-anim" style="width:78%;">
+        <p><i class="icon-remove-sign"></i>@ViewBag.AddCommentFaled</p>
+    </div>
+}

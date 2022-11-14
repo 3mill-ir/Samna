@@ -1,0 +1,32 @@
+﻿@model IEnumerable<BigMill.Models.TagModel>
+
+@{
+    ViewBag.Title = "ListTag";
+}
+
+<h2>ListTag</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddTag")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditTag", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "DeleteTag", new { id = item.ID })
+        </td>
+    </tr>
+}
+
+</table>

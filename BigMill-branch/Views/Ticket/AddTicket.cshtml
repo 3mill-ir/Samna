@@ -1,0 +1,163 @@
+﻿@{
+    ViewBag.Title = "ارسال و پیگیری درخواست";
+}
+@model BigMill.Models.UserTicketModel
+
+@section js_Requested{
+
+
+    <script>
+        var index = 0;
+        var $jq = jQuery.noConflict();
+        $jq(document).ready(function () {
+            $jq("#AppendBtn").click(function () {
+                if (index < 5) {
+                    $jq("#AppendedRequests").append("<input id=\"FileUpload" + index + "\" style=\"cursor:pointer; margin-bottom: 20px;\" name=\"MediaBox[" + index + "]\" type=\"file\" multiple>");
+                    index++;
+                }
+            });
+        });
+    </script>
+    <script type='text/javascript' src='~/Content/UserContent/js/jquery.li-scroller.1.0.js?ver=4.0'></script>
+    <script language="javascript">
+
+        jQuery(document).ready(function ($) {
+            // News Ticker /////////////////////////////
+            try {
+                jQuery("ul#nt_1381119256").liScroll({ travelocity: 0.075 });
+            } catch (e) { }
+        });
+
+        function ScrollToResultDiv() {
+            $('html, body').animate({
+                scrollTop: $("#AjaxTicketNotificationBox").offset().top
+            }, 2000);
+        };
+    </script>
+
+}
+
+@section BreadCrumb{
+    <div class="breadcrumb-place" style="height: 70px;">
+        <div class="row clearfix">
+            <div class="grid_12" style="margin-bottom: 25px;margin-top: 10px;">
+                <div class="gap clearfix custom-h30"></div>
+                <div class="breaking-news-bar" style="margin-left:25px;margin-top: -15px;">
+                    <span class="title blink_me custom-color-icon6" style="margin-right: 30px;margin-top: -45px;">@Resource.Resource.User_MessagesAndInformations</span>
+                    <ul id="nt_1381119256" class="newst" style="color:white;">
+                        @Html.Action("InformationBar", "Utility")
+                    </ul>
+                </div>
+                <div class="gap clearfix custom-h30"></div>
+            </div>
+        </div><!-- row -->
+    </div>
+}
+
+
+
+<div class="page-content" id="AjaxTicketTrackingPannel">
+
+    <div class="row clearfix">
+        <div class="grid_4" style="float:right">
+            <h3 class="col-title">@Resource.Resource.User_SendingRequests</h3>
+            <span class="liner"></span>
+            <div class="ttcf7">
+                @Scripts.Render("~/bundles/jquery")
+                @Scripts.Render("~/bundles/jqueryajax")
+                <script>
+                    $(document).ready(function () {
+                        $("#AjaxUploadButton").click(function () {
+                            document.getElementById('AddTicket_Loading').style.display = 'block';
+                            var formData = new FormData();
+                            for (var i = 0; i < index; i++) {
+                                var file = document.getElementById("FileUpload" + i).files[0];
+                                formData.append("MediaBox[" + i + "]", file);
+                            }
+                            var ContentText = document.getElementById("ContentText").value;
+                            var TrackingCodeText = document.getElementById("TrackId").value;
+                            formData.append("Content", ContentText);
+                            formData.append("TrackingCode", TrackingCodeText);
+                            $.ajax({
+                                type: "POST",
+                                url: "/Ticket/AddTicketPost",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (response) {
+                                    $("#AjaxTicketNotificationBox").empty();
+                                    $("#AjaxTicketNotificationBox").append(response);
+                                    document.getElementById('AddTicket_Loading').style.display = 'none';
+                                },
+                            });
+                        });
+                    });
+
+                </script>
+
+                <div>
+                    <p style="font-size: 16px;color: black;">@Resource.Resource.User_PleaseInsertYourTrackingCode</p>
+                    <p>
+                        @Html.TextBoxFor(model => model.TrackingCode, new { style = "width: 95%;", id = "TrackId" })
+                    </p>
+                    <p>
+                        @Html.LabelFor(model => model.Content, new { style = "font-size:16px;color:black;" })
+                        <span class="ttcf7-form-control-wrap your-q">
+                            @Html.TextAreaFor(model => model.Content, new
+                       {
+                           @class = "ttcf7-form-control ttcf7-textarea",
+                           id = "ContentText",
+                           cols = "40",
+                           rows = "10",
+                           Style = "max-width: 316px;"
+                       })
+                        </span>
+                    </p>
+                    <p>
+                        <button type="button" id="AppendBtn" style="background-color: #EEEEEE;cursor:pointer;border-style: none;width: 100%; height: 30px;" class="ttcf7-form-control ttcf7-submit">@Resource.Resource.View_AddFile</button>
+                    </p>
+                    <div id="AppendedRequests" style=" margin-bottom: 20px;">
+                    </div>
+                </div>
+                <p><button type="submit" id="AjaxUploadButton" style="background-color: #EEEEEE;cursor:pointer; border-style: none;width:200px;height: 30px;" class="ttcf7-form-control ttcf7-submit">@Resource.Resource.User_SendRequest</button></p>
+                <div id="AddTicket_Loading" style="text-align:center;padding-top:100px;display:none">
+                    <img src="../../Content/AdminContent/z3mill/ajax-load.gif" />
+                </div>
+            </div>
+        </div>
+        <div class="grid_4" style="float:right;margin-right: 270px;">
+            <h3 class="col-title">@Resource.Resource.User_TrackRequest</h3>
+            <span class="liner"></span>
+
+            <div class="ttcf7">
+
+                @using (Ajax.BeginForm("TicketTracking", "Ticket", null, new AjaxOptions
+                {
+                    UpdateTargetId = "AjaxTicketNotificationBox",
+                    InsertionMode = InsertionMode.Replace,
+                    LoadingElementId = "TicketTracking_Loading",
+                    HttpMethod = "Post",
+                    OnSuccess = "ScrollToResultDiv"
+                }, null))
+                {
+
+                    <div>
+                        <p style="font-size: 16px;color: black;">@Resource.Resource.User_InsertYourTrackingCode</p>
+                        <p>
+                            <input type="text" name="TicketId" required />
+                        </p>
+                    </div>
+                    <p><button type="submit" style="border-style: none;cursor:pointer; background-color: #EEEEEE;width:200px;height: 30px;" class="ttcf7-form-control ttcf7-submit">@Resource.Resource.User_ButtonTrackRequest</button></p>
+                    <div id="TicketTracking_Loading" style="text-align:center;padding-top:100px;display:none">
+                        <img src="../../Content/AdminContent/z3mill/ajax-load.gif" />
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="grid_12" id="AjaxTicketNotificationBox" style=" margin-top: 30px;">
+
+        </div>
+
+    </div>
+
+</div>

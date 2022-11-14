@@ -1,0 +1,71 @@
+﻿@model IEnumerable<BigMill.Models.TicketInboxModel>
+@{
+    Layout = null;
+}
+
+
+<!-- start: TABS -->
+<div class="container-fluid container-fullw">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-green" id="panel1">
+                <div class="panel-heading border-light">
+                    <h4 class="panel-title">@Resource.Resource.View_LastestTickets</h4>
+                    <ul class="panel-heading-tabs border-light">
+                        <li>
+                            <div class="pull-right">
+                                <a href="@Url.Action("Index","Tickets")" type="button" class="btn bg-dark-blue">
+                                    @Resource.Resource.View_TicketManagement
+                                </a>
+                            </div>
+                        </li>
+                        <li class="panel-tools">
+                            <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="ti-reload"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tabbable">
+                        <ul id="myTab2" class="nav nav-tabs nav-justified">
+                            @foreach (var q in @ViewBag.TicketStatus as List<string[]>)
+                            {
+                                <li>
+                                    <div>
+                                        <nav id="cl-effect-20" class="links cl-effect-20 bg-green">
+                                            <a href class="no-margin">
+                                                <span class=" bg-blue" data-hover="@q[0]">@q[0] <span class="label label-success" style="display: inline;">@q[1]</span></span>
+                                            </a>
+                                        </nav>
+                                    </div>
+                                </li>
+                            }
+
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="myTab2_example1">
+                                <table class="table table-hover no-margin">
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td class="center"><i class="icon-mobile-phone"></i></td>
+                                                <td><span>@item.TicketContent</span></td>
+                                                <td class="center">
+                                                    <div class="cl-effect-13">
+                                                        @item.CreatedOnUTCJalali
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     
+        </div>
+    </div>
+</div>
+<!-- end: TABS -->

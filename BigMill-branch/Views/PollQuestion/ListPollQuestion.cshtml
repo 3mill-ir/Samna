@@ -1,0 +1,51 @@
+﻿@model IEnumerable<BigMill.Models.PollQuestionModel>
+
+<p>
+    @Html.ActionLink("Create New", "AddPollQuestion")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Question)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedOnUTC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDateOnUTC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDateOnUTC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.F_User_Id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Question)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedOnUTC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDateOnUTC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDateOnUTC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.F_User_Id)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditPollQuestion", new { PollQuestionId = item.ID }) |
+            @Html.ActionLink("ChangeStatus", "ChangeStatusPollQuestion", new { PollQuestionId = item.ID }) |
+            @Html.ActionLink("Delete", "DeletePollQuestion", new { PollQuestionId = item.ID })
+        </td>
+    </tr>
+}
+
+</table>

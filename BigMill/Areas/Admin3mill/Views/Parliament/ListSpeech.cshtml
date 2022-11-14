@@ -1,0 +1,119 @@
+﻿@model PagedList.IPagedList<BigMill.Models.PostModel>
+@using PagedList.Mvc;
+@{
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+@section js_Handler
+{
+    <script>
+    jQuery(document).ready(function () {
+        Main.init();
+    });
+
+    $("a[id^='PipoModalLink_']").click('action', function () {
+        var temp = $(this).attr('id').split("_");
+        var myid = temp[1];
+
+        $("#PipoModalBody").empty();
+        $("#PipoModalBody").append('<p> @Resource.Resource.View_AreYouShure' + ' (#' + myid + ')</p>');
+        var $self = $("#PipoModalForm");
+        $self.attr('action', '/Admin3mill/Parliament/ChangeDisplaySpeech?PostId=' + myid+"&Page="+'@ViewBag.PaginationCount');
+    });
+</script>
+
+
+
+}
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+        @Html.Partial("PageTittle")
+        <!-- end: PAGE TITLE -->
+        <!-- start: BASIC TABLE -->
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover " id="sample-table-1">
+                            <thead>
+                                <tr>
+                                    <th class="center">@Html.DisplayName(@Resource.Resource.Post_ID)</th>
+                                    <th>@Html.DisplayName(@Resource.Resource.Post_Content_One)</th>
+                                    <th>@Html.DisplayName(@Resource.Resource.Post_Display)</th>
+                                    <th>@Html.DisplayName(@Resource.Resource.Post_CreateDateUtc)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+{
+    <tr data-html="true" data-placement="top" data-toggle="tooltip" data-original-title="
+        <div class=''><i class='fa fa-bar-chart text-red text-extra-large'></i> @item.NumberOfVisitors</div>
+        <div class=''><i class='fa fa-envelope-o text-red text-extra-large'></i> @item.NumberOfComments</div>
+        <div class=''><i class='fa fa-thumbs-o-up text-red text-extra-large'></i> @item.NumberOfLikes</div>
+        <div class=''><i class='fa fa-thumbs-o-down text-red text-extra-large'></i> @item.NumberOfDisLikes</div>">
+        <td class="center">@Html.DisplayFor(modelItem => item.ID)</td>
+        <td>@Html.DisplayFor(modelItem => item.Content_One)</td>
+        <td>@Html.DisplayFor(modelItem => item.Display)</td>
+        <td>@Html.DisplayFor(modelItem => item.CreateDateUtcJalali)</td>
+
+        <td class="center">
+            <div class="visible-md visible-lg visible-sm visible-xs">
+                <a target="popup" onclick="window.open('../../Parliament/ViewSpeech_Detail?PostId=@item.ID', 'name', 'width=screen.width,height=screen.height')" href="#" class="btn btn-transparent btn-xs tooltips" data-toggle=" tooltip" data-placement="top" title="جزییات"><i class="fa fa-desktop"></i></a>
+                <a href="@Url.Action("EditSpeech", "Parliament", new { PostId = item.ID })" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="ویرایش"><i class="fa fa-pencil"></i></a>
+                <a id="PipoModalLink_@item.ID" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="تغییر وضعیت نمایش"><i class="fa fa-times fa-white" data-toggle="modal" data-target="#PipoModal"></i></a>
+            </div>
+        </td>
+    </tr>
+}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-4">
+                        <div class="pagination pagination-green margin-bottom-10 center">
+                            صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+                            @Html.PagedListPager(Model, page => Url.Action("ListSpeech", "Parliament", new { page }))
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end: BASIC TABLE -->
+        @*Default Modal*@
+        <div class="modal fade" id="PipoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title center" id="myModalLabel">
+                            <img src="~/Content/AdminContent/z3mill/alert-icon.png" alt="Alert" height="81" width="90" />
+                        </h4>
+                    </div>
+                    <div id="PipoModalBody" class="modal-body">
+                        @Resource.Resource.View_AreYouShure
+                    </div>
+                    @using (Html.BeginForm("ChangeDisplaySpeech", "Parliament", new { PostId = "_postid_", Page = ViewBag.PaginationCount }, FormMethod.Post, new { Id = "PipoModalForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-o" data-dismiss="modal">
+                                @Resource.Resource.View_Close
+                            </button>
+                            <button type="submit" class="btn btn-danger">
+                                @Resource.Resource.View_Yes
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @*/Default Modal*@
+    </div>
+</div>
+

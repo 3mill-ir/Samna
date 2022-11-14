@@ -1,0 +1,20 @@
+﻿<div class="grid_12" style="width: 190px; margin-top: 50px;">
+    @if (ViewBag.PollSuccess != null)
+    {
+        <div class="notification-box notification-box-success notif-anim">
+            <p><i class="icon-ok"></i>@ViewBag.PollSuccess</p>
+        </div>
+    }
+    else if (ViewBag.PollError != null)
+    {
+        <div class="notification-box notification-box-error notif-anim">
+            <p><i class="icon-remove-sign"></i>@ViewBag.PollError</p>
+        </div>
+    }
+    else if (ViewBag.PollWarning != null)
+    {
+        <div class="notification-box notification-box-warning notif-anim">
+            <p><i class="icon-warning-sign"></i>@ViewBag.PollWarning</p>
+        </div>
+    }
+</div>

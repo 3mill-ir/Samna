@@ -1,0 +1,303 @@
+﻿@model PagedList.IPagedList<BigMill.Models.PostCommentModel>
+@using PagedList.Mvc;
+@{
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+
+@section js_Handler{
+    <script>
+        jQuery(document).ready(function () {
+            Main.init();
+        });
+
+        $("a[id^='PipoModalLink_']").click('action', function () {
+            var temp = $(this).attr('id').split("_");
+            var myid = temp[1];
+
+            $("#PipoModalBody").empty();
+            $("#PipoModalBody").append('<p> @Resource.Resource.View_AreYouShure' + ' (#' + myid + ')</p>');
+            var $self = $("#PipoModalForm");
+            $self.attr('action', '/Admin3mill/Comments/ChangeStatusComments?CommentsID=' + myid+"&Page="+'@ViewBag.PaginationCount');
+        });
+
+
+
+    $("a[id^='PipoModalLinkReply_']").click('action', function () {
+        var temp = $(this).attr('id').split("_");
+        var myid = temp[1];
+
+        $("#PipoModalBody").empty();
+        $("#PipoModalBody").append('<p> @Resource.Resource.View_AreYouShure' + ' (#' + myid + ')</p>');
+        var $self = $("#PipoModalForm2");
+        $self.attr('action', '/Admin3mill/Comments/ChangeStatusCommentsReply?CommentsReplyID=' + myid+"&Page="+'@ViewBag.PaginationCount');
+    });
+
+
+        $("a[id^='PipoModalLinkDelete_']").click('action', function () {
+            var temp = $(this).attr('id').split("_");
+            var myid = temp[1];
+
+            $("#PipoModalBody").empty();
+            $("#PipoModalBody").append('<p> @Resource.Resource.View_AreYouShure' + ' (#' + myid + ')</p>');
+            var $self = $("#PipoModalFormDelete");
+            $self.attr('action', '/Admin3mill/Comments/DeleteComments?CommentsID=' + myid);
+        });
+
+
+
+        $("a[id^='PipoModalLinkReplyDelete_']").click('action', function () {
+            var temp = $(this).attr('id').split("_");
+            var myid = temp[1];
+
+            $("#PipoModalBody").empty();
+            $("#PipoModalBody").append('<p> @Resource.Resource.View_AreYouShure' + ' (#' + myid + ')</p>');
+            var $self = $("#PipoModalForm2Delete");
+            $self.attr('action', '/Admin3mill/Comments/DeleteCommentsReply?CommentsReplyID=' + myid);
+        });
+</script>
+
+
+}
+<style>
+    .ConfirmedComments {
+        background-color: rgba(1, 245, 118, 0.20);
+    }
+
+    .UnConfirmedComments {
+        background-color: rgba(255, 0, 0, 0.20);
+    }
+</style>
+
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+        @Html.Partial("PageTittle")
+        <!-- end: PAGE TITLE -->
+        <!-- start: BASIC TABLE -->
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-12">
+              
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="sample-table-1">
+                            <thead>
+                                <tr>
+                                    <th class="center">@Resource.Resource.View_Number</th>
+                                    <th class="center"></th>
+                                    <th>@Html.DisplayName(Resource.Resource.PostComment_Text)</th>
+                                    <th>@Html.DisplayName(Resource.Resource.PostComment_CreateOnUtc)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+
+    int count = (Model.PageNumber - 1) * Model.PageSize;
+    int lenght = Model.TotalItemCount;
+                                string CommentClass;
+                                foreach (var item in Model)
+                                {
+        int number = (lenght - count);
+                                    CommentClass = (item.Display) ? "ConfirmedComments" : "UnConfirmedComments";
+        <tr class="@CommentClass" data-html="true" data-placement="top" data-toggle="tooltip" data-original-title=" @if (@item.NumberOfReply != -1) {
+            <div class=''><i class='fa fa-reply text-red text-extra-large'></i> @item.NumberOfReply</div>}
+<div class=''><i class='fa fa-thumbs-o-up text-red text-extra-large'></i> @item.NumberOfLikes</div>
+<div class=''><i class='fa fa-thumbs-o-down text-red text-extra-large'></i> @item.NumberOfDislikes</div>">
+                                        <td class="center">@number</td>
+@if (item.NumberOfReply != -1)
+{
+    <td class="center"><span class="label label-sm label-inverse">کامنت</span></td>
+}
+else
+{
+  
+    <td class="center"><span class="label label-sm label-inverse">پاسخ کامنت</span></td>
+}
+                                        <td>@Html.DisplayFor(modelItem => item.Text)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.CreateDateUtcJalali)</td>
+                                        <td class="center">
+                                            <div class="visible-md visible-lg visible-sm visible-xs">
+                                      
+        @if (item.Display == true)
+{
+    if (item.NumberOfReply != -1)
+    {
+        <a id="PipoModalLink_@item.ID" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="رد"><i class="fa fa-minus-square text-red" data-toggle="modal" data-target="#PipoModal"></i></a>
+    }
+    else
+    {
+        <a id="PipoModalLinkReply_@item.ID" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="رد"><i class="fa fa-minus-square text-red" data-toggle="modal" data-target="#PipoModal2"></i></a>
+    }
+}
+        else
+        {
+            if (item.NumberOfReply != -1)
+            {
+                <a id="PipoModalLink_@item.ID" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="تایید"><i class="fa fa-check-square text-green" data-toggle="modal" data-target="#PipoModal"></i></a>
+    <a id="PipoModalLinkDelete_@item.ID" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="حذف"><i class="fa fa-times bg-dark-red" data-toggle="modal" data-target="#PipoModalDelete"></i></a>
+            }
+            else
+            {
+                <a id="PipoModalLinkReply_@item.ID" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="تایید"><i class="fa fa-check-square text-green" data-toggle="modal" data-target="#PipoModal2"></i></a>
+    <a id="PipoModalLinkReplyDelete_@item.ID" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="حذف"><i class="fa fa-times bg-dark-red" data-toggle="modal" data-target="#PipoModal2Delete"></i></a>
+            }
+        }
+                                            </div>
+                                               
+                                        </td>
+                                    </tr>
+                                                { count = count + 1; }
+                                }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-4">
+                        <div class="pagination pagination-green margin-bottom-10 center">
+                            صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+                            @Html.PagedListPager(Model, page => Url.Action("ListComment", "Comments", new { page }))
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end: BASIC TABLE -->
+        @*Default Modal 1111111111*@
+        <div class="modal fade" id="PipoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                        <h4 class="modal-title center" id="myModalLabel">
+                            <img src="~/Content/AdminContent/z3mill/alert-icon.png" alt="Alert" height="81" width="90" />
+                        </h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                @Resource.Resource.View_AreYouShure
+                                                            </div>
+                    @using (Html.BeginForm("ChangeStatusComments", "Comments", new { CommentsID = "_postid_" }, FormMethod.Post, new { Id = "PipoModalForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-o" data-dismiss="modal">
+                                @Resource.Resource.View_Close
+                            </button>
+
+                            <button type="submit" class="btn btn-danger btn " tooltip-placement="top" tooltip="جزییات">
+                                <i class="fa fa-white"></i>
+                                @Resource.Resource.View_Yes
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @*/Default Modal*@
+        @*Default Modal 1111111111 Delete *@
+        <div class="modal fade" id="PipoModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title center" id="myModalLabel">
+                            <img src="~/Content/AdminContent/z3mill/alert-icon.png" alt="Alert" height="81" width="90" />
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        @Resource.Resource.View_AreYouShure
+                    </div>
+                    @using (Html.BeginForm("ChangeStatusComments", "Comments", new { CommentsID = "_postid_" }, FormMethod.Post, new { Id = "PipoModalFormDelete" }))
+                                                            {
+                                                                @Html.AntiForgeryToken()
+                                                                <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-o" data-dismiss="modal">
+                                                                        @Resource.Resource.View_Close
+                        </button>
+
+                        <button type="submit" class="btn btn-danger btn " tooltip-placement="top" tooltip="جزییات">
+                                                                        <i class="fa fa-white"></i>
+                                                                        @Resource.Resource.View_Yes
+                        </button>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*/Default Modal*@
+        @*Default Modal 2222222222*@
+        <div class="modal fade" id="PipoModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title center" id="myModalLabel">
+                            <img src="~/Content/AdminContent/z3mill/alert-icon.png" alt="Alert" height="81" width="90" />
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        @Resource.Resource.View_AreYouShure
+                                            </div>
+                    @using (Html.BeginForm("ChangeStatusCommentsReply", "Comments", new { CommentsReplyID = "_postid_", Page = ViewBag.PaginationCount }, FormMethod.Post, new { Id = "PipoModalForm2" }))
+                    {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-o" data-dismiss="modal">
+                            @Resource.Resource.View_Close
+                        </button>
+
+                        <button type="submit" class="btn btn-danger btn" tooltip-placement="top" tooltip="جزییات">
+                            <i class="fa fa-white"></i>
+                            @Resource.Resource.View_Yes
+                        </button>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @*/Default Modal*@
+        @*Default Modal 2222222222 Delete*@
+        <div class="modal fade" id="PipoModal2Delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title center" id="myModalLabel">
+                            <img src="~/Content/AdminContent/z3mill/alert-icon.png" alt="Alert" height="81" width="90" />
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        @Resource.Resource.View_AreYouShure
+                    </div>
+                    @using (Html.BeginForm("ChangeStatusCommentsReply", "Comments", new { CommentsReplyID = "_postid_" }, FormMethod.Post, new { Id = "PipoModalForm2Delete" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-o" data-dismiss="modal">
+                                @Resource.Resource.View_Close
+                            </button>
+
+                            <button type="submit" class="btn btn-danger btn" tooltip-placement="top" tooltip="جزییات">
+                                <i class="fa fa-white"></i>
+                                @Resource.Resource.View_Yes
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @*/Default Modal*@
+    </div>
+</div>

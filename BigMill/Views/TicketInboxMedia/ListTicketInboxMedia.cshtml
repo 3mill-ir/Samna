@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BigMill.Models.TicketInboxMediaModel>
+
+<p>
+    @Html.ActionLink("Create New", "AddTicketInboxMedia")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MediaPath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MediaType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.F_TicketInbox_Id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MediaPath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MediaType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.F_TicketInbox_Id)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditTicketInboxMedia", new { TicketInboxMediaId = item.ID }) |
+            @Html.ActionLink("ChangeStatus", "ChangeStatusTicketInboxMedia", new { TicketInboxMediaId = item.ID }) |
+            @Html.ActionLink("Delete", "DeleteTicketInboxMedia", new { TicketInboxMediaId = item.ID })
+        </td>
+    </tr>
+}
+
+</table>

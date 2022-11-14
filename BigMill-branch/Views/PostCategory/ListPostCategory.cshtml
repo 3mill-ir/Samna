@@ -1,0 +1,58 @@
+﻿@model IEnumerable<BigMill.Models.PostCategoryModel>
+
+<p>
+    @Html.ActionLink("Create New", "AddPostCategory")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Weight)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsView)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SeoName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TagsText)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Weight)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsView)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SeoName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TagsText)
+        </td>
+        <td>
+            @Html.ActionLink("AddPostSubCategory", "AddPostSubCategory", "PostSubCategory", new { PostCategoryId = item.ID },null) |
+            @Html.ActionLink("Edit", "EditPostCategory", new { PostCategoryId = item.ID }) |
+            @Html.ActionLink("ChangeStatus", "ChangeStatusPostCategory", new { PostCategoryId = item.ID }) |
+            @Html.ActionLink("Delete", "DeletePostCategory", new { PostCategoryId = item.ID })
+        </td>
+    </tr>
+}
+
+</table>

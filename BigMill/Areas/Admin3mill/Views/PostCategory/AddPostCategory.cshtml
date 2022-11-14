@@ -1,0 +1,152 @@
+﻿@model BigMill.Models.PostCategoryModel
+@{
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+@section CSS_Requested{
+
+    <link href="~/Content/AdminContent/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/select2/select2.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/bootstrap-datepicker/bootstrap-datepicker3.standalone.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet" media="screen">
+
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" />
+    <link rel="stylesheet" href="~/Content/AdminContent/z3mill/main.css">
+
+<link href="~/Content/AdminContent/vendor/ladda-bootstrap/ladda-themeless.min.css" rel="stylesheet" media="screen">
+
+}
+@section js_Requested
+{
+    <script src="~/Content/AdminContent/vendor/maskedinput/jquery.maskedinput.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/autosize/autosize.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/selectFx/classie.js"></script>
+    <script src="~/Content/AdminContent/vendor/selectFx/selectFx.js"></script>
+    <script src="~/Content/AdminContent/vendor/select2/select2.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="~/Content/AdminContent/z3mill/jquery.autocomplete.multiselect.js"></script>
+    <script src="~/Content/AdminContent/z3mill/main.js"></script>
+<script src="~/Content/AdminContent/vendor/ladda-bootstrap/spin.min.js"></script>
+<script src="~/Content/AdminContent/vendor/ladda-bootstrap/ladda.min.js"></script>
+}
+
+@section js_Handler
+{
+    <script src="~/Content/AdminContent/assets/js/form-elements.js"></script>
+<script src="~/Content/AdminContent/assets/js/ui-buttons.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Main.init();
+            FormElements.init();
+            UIButtons.init();
+        });
+        var availableTagsw = [];
+        @foreach (var q in ViewBag.Tags as List<BigMill.Models.TagModel>) {
+            <text>
+        availableTagsw.push("@q.Text");
+        </text>
+        }
+        availableTags = availableTagsw;
+
+
+        $('#PipoSubmit').click(function () {
+            var PipoTags = "";
+            var TagsElements = document.getElementsByClassName('ui-autocomplete-multiselect-item');
+            for (var i = 0; i < TagsElements.length; i++) {
+                PipoTags = PipoTags + "#" + TagsElements[i].textContent;
+            }
+            $('#TagsText').val(PipoTags);
+            var temp = document.getElementById('demo4').value
+            $('#Weight').val(temp);
+        });
+    </script>
+}
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+        @Html.Partial("PageTittle")
+        <!-- end: PAGE TITLE -->
+        <!-- start: BASIC EXAMPLE -->
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.TagsText)
+            <div class="container-fluid container-fullw bg-white">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row margin-top-30">
+                            <div class="col-lg-6 col-md-12">
+                                <fieldset>
+                                    <legend>
+                                        اطلاعات اولیه شاخه<span class="symbol required"></span>
+                                    </legend>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.Text)
+                                        </label>
+
+                                        @Html.TextBoxFor(model => model.Text, new { @class = "form-control", @id = "exampleInputEmail1", @placeholder = "عنوان را وارد کنید", @type = "text" })
+                                        @Html.ValidationMessageFor(model => model.Text)
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.SeoName)
+
+                                        </label>
+
+                                        @Html.TextBoxFor(model => model.SeoName, new { @class = "form-control", @id = "exampleInputEmail1", @placeholder = "سئو را وارد کنید", @type = "text" })
+                                        @Html.ValidationMessageFor(model => model.SeoName)
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            @Html.DisplayNameFor(model => model.IsView)
+
+                                        </label>
+
+                                        @Html.TextBoxFor(model => model.IsView, new { @class = "form-control", @id = "exampleInputEmail1", @placeholder = "نمایش را وارد کنید", @type = "text" })
+            
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <fieldset>
+                                    <legend>
+                                        بیشتر
+                                    </legend>
+                                    <div class="form-group" style="float:left;direction:rtl;width:100%">
+                                        @Html.DisplayNameFor(model => model.TagsText)
+
+                                        <input id="myAutocomplete" type="text" />
+                                        @Html.ValidationMessageFor(model => model.TagsText)
+                                    </div>
+                                    <div class="form-group" style="margin-top: 100px;width:100%">
+                                        @Html.DisplayNameFor(model => model.Weight)
+
+                                        <input id="demo4" type="text" value="0" name="demo4" touchspin data-verticalbuttons="true" data-verticalupclass="ti-angle-up" data-verticaldownclass="ti-angle-down">
+                                        <input id="Weight" type="text" value="0" name="Weight" style="display:none">
+                                        @Html.ValidationMessageFor(model => model.Weight)
+
+                                    </div>
+                                </fieldset>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-md-offset-5">
+
+                                <button type="submit" class="btn btn-wide btn-dark-green ladda-button " data-style="contract" id="PipoSubmit">
+                                    <span class="ladda-label">@Resource.Resource.Submit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+   
+        }
+    </div>
+    </div>

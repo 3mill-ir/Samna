@@ -1,0 +1,65 @@
+﻿@model BigMill.Models.StaticModel
+@{
+    ViewBag.Title = "StaticView";
+
+}
+
+
+
+@section js_Requested{
+
+    <script>
+        var $jq = jQuery.noConflict();
+        $jq(document).ready(function () {
+            $jq("#TutorialSabtBaCodeAppendedButton").click(function () {
+                $jq("#TutorialAppendedBox").empty();
+                $jq("#TutorialAppendedBox").append("<img src=\"../../Content/UserContent/images/Tutorial/Tutorial1.png\" style=\"margin-top:25px;\"/><img src=\"../../Content/UserContent/images/Tutorial/Tutorial2.png\" />");
+            });
+            $jq("#TutorialSabtBeduneCodeAppendedButton").click(function () {
+                $jq("#TutorialAppendedBox").empty();
+                $jq("#TutorialAppendedBox").append("<img src=\"../../Content/UserContent/images/Tutorial/Tutorial3.png\" style=\"margin-top:25px;\"/><img src=\"../../Content/UserContent/images/Tutorial/Tutorial2.png\" />");
+            });
+            $jq("#TutorialPeygiriAppendedButton").click(function () {
+                $jq("#TutorialAppendedBox").empty();
+                $jq("#TutorialAppendedBox").append("<img src=\"../../Content/UserContent/images/Tutorial/Tutorial4.png\" style=\"margin-top:25px;\"/>");
+            });
+        });
+    </script>
+    <script language="javascript">
+        jQuery(document).ready(function ($) {
+            // News Ticker /////////////////////////////
+            try {
+                jQuery("ul#nt_1381119256").liScroll({ travelocity: 0.08 });
+            } catch (e) { }
+        });
+    </script>
+
+
+}
+
+
+@section BreadCrumb{
+    <div class="breadcrumb-place" style="height: 70px;">
+        <div class="row clearfix">
+            <div class="grid_12" style="margin-bottom: 25px;margin-top: 10px;">
+                <div class="gap clearfix custom-h30"></div>
+                <div class="breaking-news-bar" style="margin-left:25px;margin-top: -15px;">
+                    <span class="title blink_me custom-color-icon6" style="margin-right: 30px;margin-top: -45px;">@Resource.Resource.User_MessagesAndInformations</span>
+                    <ul id="nt_1381119256" class="newst" style="color:white;">
+                        @Html.Action("InformationBar", "Utility")
+                    </ul>
+                </div>
+                <div class="gap clearfix custom-h30"></div>
+            </div>
+        </div><!-- row -->
+    </div>
+}
+
+
+
+
+<div class="page-content">
+    <div class="row clearfix">
+        @Html.Raw(Model.HtmlContent)
+    </div>
+</div>

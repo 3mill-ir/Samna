@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BigMill.Models.Post>
+
+@{ string controller = "";
+  string action = "";}
+@foreach (var item in Model)
+{
+    if (item.F_PostsSubCategory_Id == int.Parse(System.Configuration.ConfigurationManager.AppSettings["AkhbarPublicID"]))
+    {
+        controller = "News";
+        action = "AkhbarOmumi_Detail";
+    }
+    else if (item.F_PostsSubCategory_Id == int.Parse(System.Configuration.ConfigurationManager.AppSettings["AkhbarHozeID"]))
+    {
+        controller = "News";
+        action = "AkhbarHozeEntekhabiye_Detail";
+    }
+    else if (item.F_PostsSubCategory_Id == int.Parse(System.Configuration.ConfigurationManager.AppSettings["SpeechID"]))
+    {
+        controller = "Parliament";
+        action = "ViewSpeech_Detail";
+    }
+    else if (item.F_PostsSubCategory_Id == int.Parse(System.Configuration.ConfigurationManager.AppSettings["InterviewID"]))
+    {
+        controller = "Parliament";
+        action = "ViewInterview_Detail";
+    }
+    else if (item.F_PostsSubCategory_Id == int.Parse(System.Configuration.ConfigurationManager.AppSettings["QuestionID"]))
+    {
+        controller = "Parliament";
+        action = "ViewQuestion_Detail";
+    }
+    else if (item.F_PostsSubCategory_Id == int.Parse(System.Configuration.ConfigurationManager.AppSettings["CorrespondenceID"]))
+    {
+        controller = "Parliament";
+        action = "ViewCorrespondence_Detail";
+    }
+    
+
+    <li style="direction:rtl;text-align:right">
+        <a ><img src="~/Content/UplodedImages/PostImages/@item.Content_Two" style="max-height:400px;" alt="@item.Content_One" /></a>
+        <a href="@Url.Action(action, controller, new { PostId = item.ID, PostTittle = (System.Text.RegularExpressions.Regex.Replace(item.Content_One, @"[^\w\040@-]", "", System.Text.RegularExpressions.RegexOptions.None)).Replace(" ", "-") })">< <h3 style="font-size:16px;">@item.Content_One</h3></a>
+    </li>
+}
+
+
+

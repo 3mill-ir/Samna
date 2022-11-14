@@ -1,0 +1,195 @@
+﻿@model IEnumerable<BigMill.Models.TicketModel>
+
+@{
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+@section CSS_Requested{
+    <link href="~/Content/AdminContent/vendor/ladda-bootstrap/ladda-themeless.min.css" rel="stylesheet" media="screen">
+}
+@section js_Requested{
+    <script src="~/Content/AdminContent/vendor/ladda-bootstrap/spin.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/ladda-bootstrap/ladda.min.js"></script>
+
+}
+@section js_Handler
+{
+
+    <script src="~/Content/AdminContent/assets/js/pages-messages.js"></script>
+    <script src="~/Content/AdminContent/assets/js/ui-buttons.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Main.init();
+            Messages.init();
+            UIButtons.init();
+            $(function () {
+                PipoOnTicketListLoadingShow();
+                $.ajax({
+                    url: '@Url.Action("TicketList")',
+                    type: "POST",
+                    dataType: "html",
+                    success: function (data) {
+                        $('#PipoTicketList').html(data);
+                        $("#PipoPagingDist").empty();
+                        $("#PipoToMovePaging").detach().appendTo('#PipoPagingDist');
+                        document.getElementById('TicketList_Loading1').style.display = 'none';
+                    } //<-- added close for anonymous function
+                }); //<--added close/semicolon for ajax function
+            });
+            $(function () {
+                document.getElementById('PipoTicketAccessory_Loading').style.display = 'block';
+                $.ajax({
+                    url: '@Url.Action("TicketAccessory")',
+                    type: "Get",
+                    dataType: "html",
+                    success: function (data) {
+                        $('#PipoTicketAccessory').html(data);
+                        document.getElementById('PipoTicketAccessory_Loading').style.display = 'none';
+                    } //<-- added close for anonymous function
+                }); //<--added close/semicolon for ajax function
+            });
+            $('#TicketSearch').on('input propertychange paste', function () {
+                PipoOnTicketListLoadingShow();
+                var searchText = $(this).val();
+                var PipoCurrentStatus = document.getElementById('PipoCurrentStatus').value;
+                $.ajax({
+                    url: '@Url.Action("TicketList")',
+                    type: "POST",
+                    data: { searchString: searchText, TicketStatus: PipoCurrentStatus },
+                    dataType: "html",
+                    success: function (data) {
+                        $('#PipoTicketList').html(data);
+                        $("#PipoPagingDist").empty();
+                        $("#PipoToMovePaging").detach().appendTo('#PipoPagingDist');
+                        document.getElementById('TicketList_Loading1').style.display = 'none';
+                    } //<-- added close for anonymous function
+                }); //<--added close/semicolon for ajax function
+            });
+
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+        function PipoOnPageChange() {
+            $("#PipoPagingDist").empty();
+            $("#PipoToMovePaging").detach().appendTo('#PipoPagingDist');
+            document.getElementById('TicketSearch').value = "";
+            document.getElementById('TicketList_Loading1').style.display = 'none';
+        };
+
+        function PipoOnTicketListLoadingShow() {
+            $("#PipoPagingDist").empty();
+            document.getElementById('TicketList_Loading1').style.display = 'block';
+            $('#PipoPagingDist').append('<div id="TicketList_Loading2" style="text-align:center;padding-top:30px;display:block"><img src="../../Content/AdminContent/z3mill/ajax-load.gif" width="30"/></div>');
+        };
+
+            function PipoTicketChangeStatusClose() {
+                $("#PipoTicketChangeStatus").empty();
+            };
+            function PipoTicketAccessoryClicked(el) {
+                var elements = document.getElementsByClassName('myPipoAccessoryList');
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].classList.remove('PipoAccessoryLi-Selected');
+                }
+                var element = document.getElementById(el);
+                element.classList.add("PipoAccessoryLi-Selected");
+            };
+    </script>
+
+
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <div class="wrap-messages">
+            <div id="inbox" class="inbox">
+                <!-- start: EMAIL OPTIONS -->
+                <div class="col email-options perfect-scrollbar">
+                    <div class="padding-15">
+                        <div id="PipoPagingDist" style="min-height:100px;border-bottom:5px solid #808080">
+                        </div>
+                        <div id="PipoTicketAccessory_Loading" style="text-align:center;padding-top:100px;display:none">
+                            <img src="../../Content/AdminContent/z3mill/ajax-load.gif" />
+                        </div>
+                        <ul id="PipoTicketAccessory" class="main-options padding-15"></ul>
+                    </div>
+                </div>
+                <!-- end: EMAIL OPTIONS -->
+                <!-- start: EMAIL LIST -->
+                <div class="col email-list">
+                    <div class="wrap-list">
+                        <div class="wrap-options">
+                            <div class="messages-options padding-15">
+                                <div class="btn-group">
+                                    <button class="btn btn-primary btn-wide" type="button">
+                                        Compose
+                                    </button>
+                                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul role="menu" class="dropdown-menu dropdown-light">
+                                        <li>
+                                            <a href="#">
+                                                <span class="title"><i class="ti-import"></i> Inbox</span>
+                                                <span class="badge">10</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="title"><i class="ti-upload"></i> Sent</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="title"><i class="ti-na"></i> Spam</span>
+                                                <span class="badge">1</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="title"><i class="ti-star"></i> Starred</span>
+                                                <span class="badge">2</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-transparent pull-right open-message-search">
+                                    <i class="ti-search"></i>
+                                </button>
+                                <button class="btn btn-transparent pull-right close-message-search">
+                                    <i class="ti-close"></i>
+                                </button>
+                            </div>
+                            <div class="messages-search">
+                                <form>
+                                    <input id="TicketSearch" type="text" placeholder="جستجوی شماره پیگیری ..." class="form-control underline">
+                                </form>
+                            </div>
+                        </div>
+                        <!-- start: Ticket LIST -->
+                        <div id="TicketList_Loading1" style="text-align:center;padding-top:100px;display:none">
+                            <img src="../../Content/AdminContent/z3mill/ajax-load.gif" />
+                        </div>
+                        <ul id="PipoTicketList" class="messages-list perfect-scrollbar"></ul>
+                        <!-- end: Ticket LIST -->
+                    </div>
+                </div>
+                <!-- end: EMAIL LIST -->
+                <!-- start: EMAIL READER -->
+                <div class="email-reader perfect-scrollbar">
+                    <div id="TicketReader_Loading" style="text-align:center;padding-top:100px;display:none">
+                        <img src="../../Content/AdminContent/z3mill/ajax-load.gif" />
+                    </div>
+                    <div id="TickerReader">
+
+                    </div>
+                </div>
+                <!-- end: EMAIL READER -->
+
+            </div>
+        </div>
+    </div>
+</div>

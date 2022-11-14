@@ -1,0 +1,51 @@
+﻿@model BigMill.Models.MenuNames
+<nav class="main">
+    <ul id="menu-main" class="sf-menu">
+        @foreach (var CategoryItem in Model.Menu)
+        {
+            <li class="menu-item current-menu-item selectedLava" style="margin-right:10px;cursor: default;">
+                @if (CategoryItem.IsView != null)
+                {
+                    if (CategoryItem.IsView.IndexOf("http://") > -1)
+                    {
+                        <a style="font-size:14px;" href="@CategoryItem.IsView">@CategoryItem.MenuName</a>
+                    }
+                    else if (CategoryItem.IsView.IndexOf("/") > -1)
+                    {
+                        <a style="font-size:14px;" href="~/@CategoryItem.IsView">@CategoryItem.MenuName</a>
+                    }
+                    else
+                    {
+                        <a style="font-size:14px;" href="@Url.Action("StaticView", "Static", new { FileName=CategoryItem.IsView })">@CategoryItem.MenuName</a>
+                    }
+                }
+                else
+                {
+                    <a style="font-size:14px;">@CategoryItem.MenuName</a>
+                }
+                <ul class="sub-menu">
+                    @foreach (var SubCategoryItem in CategoryItem.SubMenu)
+                    {
+                        <li class="menu-item" style="cursor: default;">
+                            @if (SubCategoryItem.IsView != null)
+                            {
+                                if (SubCategoryItem.IsView.IndexOf("/") > -1)
+                                {
+                                    <a href="~/@SubCategoryItem.IsView">@SubCategoryItem.SubMenuName</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("StaticView", "Static", new { FileName = SubCategoryItem.IsView })">@SubCategoryItem.SubMenuName</a>
+                                }
+                            }
+                            else
+                            {
+                                <a>@SubCategoryItem.SubMenuName</a>
+                            }
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+</nav>

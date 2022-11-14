@@ -1,0 +1,62 @@
+﻿@model PagedList.IPagedList<BigMill.Models.TicketModel>
+@using BigMill.Infrastructure
+@using PagedList.Mvc;
+
+
+
+
+
+
+
+
+
+
+
+    @foreach (var item in Model)
+        {
+            string TicketStatus = "";
+            if (item.Status == "در وضعیت انتظار")
+            {
+                TicketStatus = "PipoTicketWaiting";
+            }
+            else if (item.Status == "پاسخ داده شده")
+            {
+                TicketStatus = "PipoTicketResponsed";
+            }
+            string temp = ViewBag.CurrentFilter;
+            string HitRemain = item.TrackingCode.ToLower();
+            if (!string.IsNullOrEmpty(temp))
+            {
+
+                    HitRemain=HitRemain.Replace(temp.ToLower(),"<mark>" + temp.ToLower() + "</mark>");
+          
+            } 
+            <li class="messages-item PipoTicketList @TicketStatus">
+                @Ajax.RawActionLink("<span class=\"messages-item-star\" title=\"Mark as starred\"></span><span class=\"messages-item-from\" style=\"margin-right:0px!important\">" + @Html.Raw(HitRemain.ToUpper()) + "</span> <div class=\"messages-item-time\"> <span class=\"text\">" + @item.LastUpdateOnUtcJalali + "</span></div><span class=\"messages-item-subject\" style=\" white-space: nowrap; overflow: hidden; -ms-text-overflow: ellipsis; -o-text-overflow: ellipsis; text-overflow: ellipsis;\">" + @item.TicketInbox_brief + "</span> <span class=\"messages-item-content\"><i class=\"fa fa-inbox PipoTicketListIcons\" > " + @item.CountInbox + "</i> <i class=\"fa fa-upload PipoTicketListIcons\" > " + @item.CountOutbox + "</i><i class=\"fa fa-file-video-o PipoTicketListIcons\" > " + @item.CountInboxMedia + "</i></span>",
+                                    "TicketDetail", "Tickets",
+                                    new { F_TicketId = item.ID },
+                                         new AjaxOptions
+                                         {
+                                             UpdateTargetId = "TickerReader",
+                                             InsertionMode = InsertionMode.Replace,
+                                             LoadingElementId = "TicketReader_Loading",
+                                             HttpMethod = "Post"
+
+                                         }, null)
+            </li>
+
+        
+
+
+        }
+
+
+<div id="PipoToMovePaging" class="pagination pagination-green margin-bottom-10 center">
+    @Html.PagedListPager(Model, page => Url.Action("TicketList", "Tickets", new { page, searchString = @ViewBag.CurrentFilter, TicketStatus = @ViewBag.CurrentStatus }),
+                                    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "PipoTicketList", LoadingElementId = "TicketList_Loading1", OnSuccess = "PipoOnPageChange" }))
+
+
+
+</div>
+
+<input type="hidden" id="PipoCurrentStatus" name="PipoCurrentStatus" value="@ViewBag.CurrentStatus">

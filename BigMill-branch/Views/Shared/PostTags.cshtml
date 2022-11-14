@@ -1,0 +1,10 @@
+﻿
+<div class="tagcloud">
+    @if (ViewBag.ChildPipTags != null)
+    {
+        foreach (var item in @ViewBag.ChildPipTags as List<BigMill.Models.TagSelectModel>)
+        {
+        <a href="@Url.Action("Tag", "Tag", new { page = 1, TagId = item.ID })" class='tag-link-20 custom-fz9'>@item.TagText</a>
+        }
+    }
+    </div>

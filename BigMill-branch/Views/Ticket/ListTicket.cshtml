@@ -1,0 +1,33 @@
+﻿@model IEnumerable<BigMill.Models.TicketModel>
+
+<p>
+    @Html.ActionLink("Create New", "AddTicket")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastUpdateOnUtc)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastUpdateOnUtc)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditTicket", new { TicketId = item.ID }) |
+            @Html.ActionLink("ChangeStatus", "ChangeStatusTicket", new { TicketId = item.ID }) |
+            @Html.ActionLink("Delete", "DeleteTicket", new { TicketId = item.ID })
+        </td>
+    </tr>
+}
+
+</table>

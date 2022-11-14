@@ -1,0 +1,79 @@
+﻿@model BigMill.Models.TicketOutBoxModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>TicketOutBoxModel</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content_One, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Content_One)
+                @Html.ValidationMessageFor(model => model.Content_One)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.isRead, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.isRead)
+                @Html.ValidationMessageFor(model => model.isRead)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SMSText, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SMSText)
+                @Html.ValidationMessageFor(model => model.SMSText)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SMSStatusOne, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SMSStatusOne)
+                @Html.ValidationMessageFor(model => model.SMSStatusOne)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SMSStatusTwo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SMSStatusTwo)
+                @Html.ValidationMessageFor(model => model.SMSStatusTwo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.F_TicketInbox_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.F_TicketInbox_Id)
+                @Html.ValidationMessageFor(model => model.F_TicketInbox_Id)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.F_User_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.F_User_Id)
+                @Html.ValidationMessageFor(model => model.F_User_Id)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ListTicketOutBox")
+</div>

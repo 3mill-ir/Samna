@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "نتایج جستجو";
+}
+@model PagedList.IPagedList<BigMill.Models.PostModel>
+@using PagedList.Mvc;
+@using BigMill.Infrastructure;
+
+@section BreadCrumb{
+    <div class="breadcrumb-place" style="height: 70px;">
+        <div class="row clearfix">
+            <div class="grid_12" style="margin-bottom: 25px;margin-top: 10px;">
+                <div class="gap clearfix custom-h30"></div>
+                <div class="breaking-news-bar" style="margin-left:25px;margin-top: -15px;">
+                    <span class="title blink_me custom-color-icon6" style="margin-right: 30px;margin-top: -45px;">@Resource.Resource.User_MessagesAndInformations</span>
+                    <ul id="nt_1381119256" class="newst" style="color:white;">
+                        @Html.Action("InformationBar", "Utility")
+                    </ul>
+                </div>
+                <div class="gap clearfix custom-h30"></div>
+            </div>
+        </div><!-- row -->
+    </div>
+}
+<div class="page-content">
+    <div class="row clearfix">
+        <!-- post -->
+        <div class="grid_12 posts both-sidebars" style="text-align:center;">
+            @if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <div class=" post type-post status-publish format-standard has-post-thumbnail hentry category-news clearfix" style="width: 80%;">
+                        <a class="thumb-big" style="width: 20%; float: right;">
+                            <img src="~/Content/UplodedImages/PostImages/@item.Content_Two" alt="@item.Content_One" style=" width: 100%;height: 125px;" />
+                        </a>
+                        <div class="content" style="background-color:#E8E8E8; width:80%;float: left;min-height: 125px;">
+                            <div style="float: right;width:7%;height:125px;background-color: #D2D2D2;">
+                                <span style="margin-top: 15px; float: right;margin-right:10px;"><i class="icon-comments"></i> <a>@item.NumberOfComments</a></span>
+                                <span style="margin-top: 20px; float: right;margin-right:10px;"><i class="icon-thumbs-up"></i> <a>@item.NumberOfLikes</a></span>
+                                <span style="margin-top: 20px; float: right;margin-right:10px;"><i class="icon-thumbs-down"></i> <a>@item.NumberOfDisLikes</a></span>
+                            </div>
+                            <div class="meta-box" style=" width: 90%;">
+                                @if (item.Content_One.Count() > 70)
+                                {
+                                    string Title = item.Content_One.Remove(70);
+                                    Title += " ...";
+                                    <h4 style="line-height: 25px;width: 100%;"><a style="line-height: 35px;margin-top: 20px;">@Title</a></h4>
+                                }
+                                else
+                                {
+                                    <h4 style="line-height: 25px;width: 100%;"><a style="line-height: 35px;margin-top: 20px;">@item.Content_One</a></h4>
+                                }
+                                <!-- meta date -->
+                            </div>
+                            @if (item.Content_Three.Count() > 210)
+                            {
+                                string Description = item.Content_Three.Remove(210);
+                                Description += " ...";
+                                <div style="font-size: 14px;line-height: 30px;margin-top: -25px;width: 85%;margin-right:70px;">@Description</div>
+                            }
+                            else
+                            {
+                                <div style="font-size: 14px;line-height: 30px;margin-top: -25px;width: 85%;margin-right:70px;">@item.Content_Three</div>
+                            }
+                        </div>
+                        @if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["AkhbarPublicID"]))
+                        {
+                            <a style="width: 100%; font-size: 15px;" href="@Url.Action("AkhbarOmumi_Detail", "News", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" class="tbutton tbutton1 small"><span>@Resource.Resource.User_MoreDetails</span></a>
+                        }
+                        else if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["AkhbarHozeID"]))
+                        {
+                            <a style="width: 100%; font-size: 15px;" href="@Url.Action("AkhbarHozeEntekhabiye_Detail", "News", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" class="tbutton tbutton1 small"><span>@Resource.Resource.User_MoreDetails</span></a>
+                        }
+                        else if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["SpeechID"]))
+                        {
+                            <a style="width: 100%; font-size: 15px;" href="@Url.Action("ViewSpeech_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" class="tbutton tbutton1 small"><span>@Resource.Resource.User_MoreDetails</span></a>
+                        }
+                        else if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["QuestionID"]))
+                        {
+                            <a style="width: 100%; font-size: 15px;" href="@Url.Action("ViewQuestion_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" class="tbutton tbutton1 small"><span>@Resource.Resource.User_MoreDetails</span></a>
+                        }
+                        else if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["InterviewID"]))
+                        {
+                            <a style="width: 100%; font-size: 15px;" href="@Url.Action("ViewInterview_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" class="tbutton tbutton1 small"><span>@Resource.Resource.User_MoreDetails</span></a>
+                        }
+                        else if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["CorrespondenceID"]))
+                        {
+                            <a style="width: 100%; font-size: 15px;" href="@Url.Action("ViewCorrespondence_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" class="tbutton tbutton1 small"><span>@Resource.Resource.User_MoreDetails</span></a>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                <p style="font-size: 35px;color: maroon;">@Resource.Resource.User_SearchResultNotFound</p>
+            }
+        </div><!-- grid 6 posts -->
+        <!--end post -->
+        <!-- PAGINATION -->
+        <p class="hide"></p>
+        <!-- END PAGINATION -->
+        <div style="text-align:center;direction:ltr!important" class="pagination-tt clearfix">
+            صفحه @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) از @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("SearchResult", "Search", new { page, SearchBox = ViewBag.SearchBox }))
+        </div>
+    </div><!-- row -->
+</div>

@@ -1,0 +1,142 @@
+﻿@model IEnumerable<BigMill.Models.TicketInboxModel>
+
+
+@{
+    bool isFirst = true;
+    string NotFirstTicket = "";
+
+    <div class="message-actions">
+        <ul class="actions no-margin no-padding block">
+            <li class="no-padding">
+                @if (Model.FirstOrDefault() != null)
+                {
+                    @Ajax.ActionLink(Resource.Resource.Ticket_Reply, "TicketResponse", "Tickets", new { F_LastTicketInboxId = Model.FirstOrDefault().ID }, new AjaxOptions
+                           {
+                               UpdateTargetId = "PipoTicketResponse",
+                               InsertionMode = InsertionMode.Replace,
+                               LoadingElementId = "PipoTicketResponse_Loading",
+                               HttpMethod = "Get"
+                           }, new { @class = "btn text-info", data_keyboard = "false", data_backdrop = "static", data_toggle = "modal", data_target = ".bs-example-modal-lg" })
+                }
+            </li>
+            <li class="no-padding">
+                @if (Model.FirstOrDefault() != null)
+                {
+                    @Ajax.ActionLink(Resource.Resource.Ticket_ChangeStatus, "TicketChangeStatus", "Tickets", new { F_TicketId = Model.FirstOrDefault().F_Ticket_Id }, new AjaxOptions
+                           {
+                               UpdateTargetId = "PipoTicketChangeStatus",
+                               InsertionMode = InsertionMode.Replace,
+                               LoadingElementId = "TicketReader_Loading",
+                               HttpMethod = "Get"
+                           }, new { @class = "text-info" })
+                }
+            </li>
+        </ul>
+    </div>
+    <div id="PipoTicketChangeStatus">
+
+    </div>
+
+    foreach (var q in Model)
+    {
+        foreach (var p in q.TicketOutbox)
+        {
+            if (isFirst)
+            {
+
+                {
+                    isFirst = false;
+
+                }
+            }
+            <div>
+                <div class="message-header @NotFirstTicket">
+                    <img class="message-item-avatar" alt="John Stark" src="../../Content/AdminContent/z3mill/support-icon.png">
+                    <div class="message-time">
+                        @p.CreatedOnUTCJalali
+                    </div>
+                    <div class="message-from">
+                        @p.F_User_Id
+                    </div>
+                    <div class="message-to">
+                    </div>
+                </div>
+                <div class="message-content">
+                    <p>
+                        @p.Content_One
+                    </p>
+                </div>
+            </div>   <hr>
+            { NotFirstTicket = "NotFirstTicketItem"; }
+        }
+        if (isFirst)
+        {
+
+            {
+                isFirst = false;
+
+            }
+        }
+
+        <div style="text-align:left">
+            <div class="message-header @NotFirstTicket">
+                <img class="message-item-avatar" style="float:left" alt="John Stark" src="../../Content/AdminContent/z3mill/community-users-icon.png">
+                <div class="message-time">
+                    @q.CreatedOnUTCJalali
+                </div>
+                <div class="message-from">
+                    @q.TicketFrom
+                </div>
+                <div class="message-to">
+                    @q.TicketType
+                </div>
+            </div>
+            <div class="message-content">
+                <p>@q.TicketContent</p>
+                @{
+        var query = q.TicketInboxMedia.FirstOrDefault();
+        if (query != null)
+        {
+            if (query.MediaType.StartsWith("video"))
+            {
+                <video src="/Streaming/File/@query.MediaType.Split('/')[0]/@query.MediaPath.Split('.')[0]/@query.MediaPath.Split('.')[1]" width="270" height="220" controls style="margin-right:-5px" type="@query.MediaType"></video>
+            }
+            else if (query.MediaType.StartsWith("audio"))
+            {
+                <audio src="/Streaming/File/@query.MediaType.Split('/')[0]/@query.MediaPath.Split('.')[0]/@query.MediaPath.Split('.')[1]" width="270" height="220" controls style="margin-right:-5px" type="@query.MediaType"></audio>
+            }
+            else if (query.MediaType.StartsWith("image"))
+            {
+                <img src="/Streaming/File/@query.MediaType.Split('/')[0]/@query.MediaPath.Split('.')[0]/@query.MediaPath.Split('.')[1]" width="270" style="margin-right:-5px" type="@query.MediaType">
+            }
+
+
+        }
+}
+            </div>
+        </div>
+        <hr>
+        { NotFirstTicket = "NotFirstTicketItem"; }
+
+    }
+}
+
+
+<style>
+    .NotFirstTicketItem {
+        padding-top: 0 !important;
+    }
+</style>
+
+
+<!-- Large Modal -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-lg">
+        <div id="PipoTicketResponse_Loading" style="text-align:center;padding-top:100px;display:none">
+            <img src="../../Content/AdminContent/z3mill/ajax-load.gif" />
+        </div>
+        <div id="PipoTicketResponse" class="modal-content">
+        </div>
+    </div>
+</div>
+<!-- /Large Modal -->

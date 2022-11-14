@@ -1,0 +1,84 @@
+﻿@model IEnumerable<BigMill.Models.PostModel>
+           @using BigMill.Infrastructure;
+@{
+    Layout = null;
+}
+<li class="active" id="panel-tt1">
+    <ul class="mostpopular">
+        @foreach (var item in Model)
+        {
+            if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["AkhbarPublicID"]))
+            {
+                <li style="min-height: 120px;">
+                    <div class="post-thumbnail">
+                        <a href="@Url.Action("AkhbarOmumi_Detail", "News", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_One">
+                            <img src="~/Content/UplodedImages/PostImages/@item.Content_Two" width="50" height="50" alt="Image Alt" title="@item.Content_Three">
+                        </a>
+                    </div>
+                    <a style="float: right;margin-right: 17px;" href="@Url.Action("AkhbarOmumi_Detail", "News", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_Three">@item.Content_One</a>
+                    <span class="date" style="float: right; margin-right: 18px;">@item.CreateDateUtcJalali</span>
+                </li>
+            }
+            else if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["AkhbarHozeID"]))
+            {
+                <li style="min-height: 120px;">
+                    <div class="post-thumbnail">
+                        <a href="@Url.Action("AkhbarHozeEntekhabiye_Detail", "News", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_One">
+                            <img src="~/Content/UplodedImages/PostImages/@item.Content_Two" width="50" height="50" alt="Image Alt" title="@item.Content_Three">
+                        </a>
+                    </div>
+                    <a style="float: right;margin-right: 17px;" href="@Url.Action("AkhbarHozeEntekhabiye_Detail", "News", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_Three">@item.Content_One</a>
+                    <span class="date" style="float: right; margin-right: 18px;">@item.CreateDateUtcJalali</span>
+                </li>
+            }
+            else if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["SpeechID"]))
+            {
+                <li style="min-height: 120px;">
+                    <div class="post-thumbnail">
+                        <a href="@Url.Action("ViewSpeech_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_One">
+                            <img src="~/Content/UplodedImages/PostImages/@item.Content_Two" width="50" height="50" alt="Image Alt" title="@item.Content_Three">
+                        </a>
+                    </div>
+                    <a style="float: right;margin-right: 17px;" href="@Url.Action("ViewSpeech_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_Three">@item.Content_One</a>
+                    <span class="date" style="float: right; margin-right: 18px;">@item.CreateDateUtcJalali</span>
+                </li>
+            }
+            else if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["QuestionID"]))
+            {
+                <li style="min-height: 120px;">
+                    <div class="post-thumbnail">
+                        <a href="@Url.Action("ViewQuestion_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_One">
+                            <img src="~/Content/UplodedImages/PostImages/@item.Content_Two" width="50" height="50" alt="Image Alt" title="@item.Content_Three">
+                        </a>
+                    </div>
+                    <a style="float: right;margin-right: 17px;" href="@Url.Action("ViewQuestion_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_Three">@item.Content_One</a>
+                    <span class="date" style="float: right; margin-right: 18px;">@item.CreateDateUtcJalali</span>
+                </li>
+            }
+            else if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["InterviewID"]))
+            {
+                <li style="min-height: 120px;">
+                    <div class="post-thumbnail">
+                        <a href="@Url.Action("ViewInterview_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_One">
+                            <img src="~/Content/UplodedImages/PostImages/@item.Content_Two" width="50" height="50" alt="Image Alt" title="@item.Content_Three">
+                        </a>
+                    </div>
+                    <a style="float: right;margin-right: 17px;" href="@Url.Action("ViewInterview_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_Three">@item.Content_One</a>
+                    <span class="date" style="float: right; margin-right: 18px;">@item.CreateDateUtcJalali</span>
+                </li>
+            }
+            else if (item.F_PostsSubCategory_ID == int.Parse(System.Configuration.ConfigurationManager.AppSettings["CorrespondenceID"]))
+            {
+                <li style="min-height: 120px;">
+                    <div class="post-thumbnail">
+                        <a href="@Url.Action("ViewCorrespondence_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_One">
+                            <img src="~/Content/UplodedImages/PostImages/@item.Content_Two" width="50" height="50" alt="Image Alt" title="@item.Content_Three">
+                        </a>
+                    </div>
+                    <a style="float: right;margin-right: 17px;" href="@Url.Action("ViewCorrespondence_Detail", "Parliament", new { PostId = item.ID, PostTittle = @Url.URL4SEO(item.ID, item.Content_One) })" title="@item.Content_Three">@item.Content_One</a>
+                    <span class="date" style="float: right; margin-right: 18px;">@item.CreateDateUtcJalali</span>
+                </li>
+            }
+        }
+    </ul>
+</li>

@@ -1,0 +1,106 @@
+﻿@model IEnumerable<BigMill.Models.PostModel>
+
+<p>
+    @Html.ActionLink("Create New", "AddPost")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Content_One)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content_Two)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content_Three)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content_Four)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfVisitors)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfComments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfLikes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfDisLikes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Display)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.F_PostsSubCategory_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.F_Users_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDateUtc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TagsText)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content_One)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content_Two)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content_Three)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content_Four)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfVisitors)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfComments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfLikes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfDisLikes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Display)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.F_PostsSubCategory_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.F_Users_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDateUtc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TagsText)
+        </td>
+        <td>
+            @Html.ActionLink("Comment", "AddPostComment", "PostComment", new { PostId = item.ID }) |
+            @Html.ActionLink("Edit", "EditPost", new { PostId = item.ID }) |
+            @Html.ActionLink("ChangeStatus", "ChangeStatusPost", new { PostId = item.ID }) |
+            @Html.ActionLink("Delete", "DeletePost", new { PostId = item.ID })
+        </td>
+    </tr>
+}
+
+</table>

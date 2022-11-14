@@ -1,0 +1,275 @@
+﻿@{
+    ViewBag.Title = "صفحه خانگی";
+}
+
+
+@section js_Requested{
+
+<script type='text/javascript' src='~/Content/UserContent/js/owl.carousel.min.js?ver=2.0.0'></script>
+    <script type='text/javascript' src='~/Content/UserContent/js/ProgressCircle.js?ver=1'></script>
+    <script type='text/javascript' src='~/Content/UserContent/js/jquery.tt_chart.js?ver=4.3.2'></script>
+
+
+    <script language="javascript">
+        jQuery(document).ready(function ($) {
+            try {
+                $('.flexslider').flexslider({
+                    animation: "slide",
+                    direction: "horizontal",
+                    slideshowSpeed: 8000,
+                    animationSpeed: 700,
+                    prevText: "",
+                    nextText: "",
+                    controlNav: false,
+                    keyboardNav: true,
+                    start: function (slider) {
+                        $('.flex-active-slide').find('h3').delay(100).addClass('effect').fadeIn(400);
+                        $('.flex-active-slide').find('p').delay(100).addClass('effectt').fadeIn(400);
+                    },
+                    after: function (slider) {
+                        $('.flex-active-slide').find('h3').delay(100).addClass('effect').fadeIn(400).removeClass('Out');
+                        $('.flex-active-slide').find('p').delay(100).addClass('effectt').fadeIn(400).removeClass('Out');
+                    }
+                });
+            } catch (e) { }
+        });
+    </script>
+
+    <script>
+        jQuery(document).ready(function ($) {
+                // posts Carousel /////////////////////////////
+                try {
+                    $("#poc_tt2").owlCarousel({
+                        items: 4,
+                        loop: true,
+                        margin: 12,
+                        nav: true,
+                        navSpeed: 1000,
+                        navText: ['<i class="icon-angle-right"></i>', '<i class="icon-angle-left"></i>'],
+                        dots: false,
+                        autoplay: false,
+                        autoplayTimeout: 4000,
+                        autoplaySpeed: 1000,
+                        fallbackEasing: 'easeInOutExpo',
+                        autoplayHoverPause: true,
+                        responsive: { 0: { items: 1, nav: false }, 480: { items: 2 }, 768: { items: 4 } }
+
+                    });
+
+
+                } catch (e) { }
+
+
+            //End Document.ready//
+        });
+    </script>
+    <script language="javascript">
+
+        jQuery(document).ready(function ($) {
+            // portfolio Carousel /////////////////////////////
+            try {
+                $("#pc_tt1").owlCarousel({
+                    items: 4,
+                    loop: true,
+                    margin: 12,
+                    nav: true,
+                    navSpeed: 1000,
+                    navText: ['<i class="icon-angle-right"></i>', '<i class="icon-angle-left"></i>'],
+                    dots: false,
+                    autoplay: true,
+                    autoplayTimeout: 4000,
+                    autoplaySpeed: 1000,
+                    autoplayHoverPause: true,
+                    responsive: { 0: { items: 1, nav: false }, 480: { items: 2 }, 768: { items: 4 } }
+
+                });
+
+
+            } catch (e) { }
+
+            //End Document.ready//
+        });
+    </script>
+
+
+@*Himan 4 Delete*@
+    <script language="javascript">
+        jQuery(document).ready(function ($) {
+            // posts Carousel /////////////////////////////
+            try {
+                $("#poc_458214065").owlCarousel({
+                    items: 2,
+                    loop: true,
+                    margin: 12,
+                    nav: true,
+                    navSpeed: 1000,
+                    navText: ['<i class="icon-angle-right"></i>', '<i class="icon-angle-left"></i>'],
+                    dots: false,
+                    autoplay: false,
+                    autoplayTimeout: 4000,
+                    autoplaySpeed: 1000,
+                    fallbackEasing: 'easeInOutExpo',
+                    autoplayHoverPause: true,
+                    responsive: { 0: { items: 1, nav: false }, 480: { items: 2 }, 768: { items: 2 } }
+                });
+            } catch (e) { }
+            //End Document.ready//
+        });
+    </script>
+
+
+   @*Himan 4 Delete*@ 
+    <script language="javascript">
+
+        jQuery(document).ready(function ($) {
+
+            // Clients Carousel /////////////////////////////
+            try {
+
+                $("#cc_tt1").owlCarousel({
+                    items: 4,
+                    loop: true,
+                    margin: 12,
+                    nav: true,
+                    navSpeed: 1000,
+                    navText: ['<i class="icon-angle-right"></i>', '<i class="icon-angle-left"></i>'],
+                    dots: false,
+                    autoplay: true,
+                    autoplayTimeout: 4000,
+                    autoplaySpeed: 1000,
+                    autoplayHoverPause: true,
+                    responsive: { 0: { items: 1, nav: false }, 480: { items: 2 }, 768: { items: 4 } }
+
+                });
+
+            } catch (e) { }
+
+        });
+    </script>
+
+
+   
+  
+}
+
+
+
+
+@section Slider{
+    <!-- SLIDER -->
+    <div class="row clearfix fullBG">
+        <div class="big-slider clearfix flexslider flex-slide-h">
+            <ul class="slides">
+                @*@Html.Action("SliderGenerator", "Utility")*@
+                <li style="direction:rtl;text-align:right">
+                    <a><img src="~/Content/UplodedImages/StaticSlide1.jpg" style="max-height:400px;" alt="دیدار و مذاکرات دکتر خضری در راس هیات پارلمانی ایران ببا معاون ونخست وزیر و معاون تجارت و بازرگانی وزیر بازرگانی کشور تایلند و هیت همراه در بانکوک پایتخت کشور تایلند" /></a>
+                    <a> <h3 style="font-size:16px;">دیدار و مذاکرات دکتر خضری در راس هیات پارلمانی ایران ببا معاون ونخست وزیر و معاون تجارت و بازرگانی وزیر بازرگانی کشور تایلند و هیت همراه در بانکوک پایتخت کشور تایلند</h3></a>
+                </li>
+                <li style="direction:rtl;text-align:right">
+                    <a><img src="~/Content/UplodedImages/StaticSlide2.jpg" style="max-height:400px;" alt="بازدید دکتررسول خضری از بزرگترین کارخانه برنج دنیا در تایلند" /></a>
+                    <a> <h3 style="font-size:16px;">بازدید دکتررسول خضری از بزرگترین کارخانه برنج دنیا در تایلند</h3></a>
+                </li>
+                <li style="direction:rtl;text-align:right">
+                    <a><img src="~/Content/UplodedImages/StaticSlide3.jpg" style="max-height:400px;" alt="تقدیر گروه دوستی پارلمان تایلندازدکتررسول خضری و هیات همراه در محل پارلمان تایلند" /></a>
+                    <a> <h3 style="font-size:16px;">تقدیر گروه دوستی پارلمان تایلندازدکتررسول خضری و هیات همراه در محل پارلمان تایلند</h3></a>
+                </li>
+                <li style="direction:rtl;text-align:right">
+                    <a><img src="~/Content/UplodedImages/StaticSlide4.jpg" style="max-height:400px;" alt="دیدار وجلسه با سفیر ایران در تایلند و معاون شرق اسیا و اقیانوسیه وزیر امور خارجه در محل سفارت جمهوری اسلامی " /></a>
+                    <a> <h3 style="font-size:16px;">دیدار وجلسه با سفیر ایران در تایلند و معاون شرق اسیا و اقیانوسیه وزیر امور خارجه در محل سفارت جمهوری اسلامی </h3></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- End SLIDER -->
+}
+
+
+<div class="page-content">
+    <div class="row clearfix">
+        <div class="grid_8">
+            <div style="background-image: url(../../Content/UserContent/z3mill/samna-help.png); height: 101px;">
+                <a href="@Url.Action("StaticView", "Static", new { FileName = "TicketTutorial.html" })"><img src="~/Content/UserContent/images/samna-help-button.gif" alt="help" style="float: left;border-radius: 100px;margin-top: 25px;margin-left: 64px; height: 109px; width: 109px;" /></a>
+            </div>
+        </div>
+        <div class="grid_4">
+            <div style="background-image: url(../../Content/UserContent/z3mill/samna-in.png); height: 101px;">
+                <a href="@Url.Action("AddTicket", "Ticket")"><img src="~/Content/UserContent/images/samna-in-button.gif" alt="signin" style="float: left;margin-top: 25px;margin-left: 25px; height: 109px;border-radius: 100px;width: 109px;" /></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row clearfix">
+        <div class="grid_12">
+            <h3 class="col-title">@Resource.Resource.User_LatestNews</h3>
+            <span class="liner"></span>
+            <div class="owl-carousel nav_side" id="pc_tt1">
+                @Html.Action("LatestNews", "Utility", new { CategoryId = System.Configuration.ConfigurationManager.AppSettings["AkhbarId"] })
+            </div>
+        </div>
+    </div>
+
+    <div class="row clearfix" style="height: 430px; margin-top: 60px; margin-bottom: 30px;">
+        <div class="grid_5" style=" height: 430px;float: right;background-color:#eaeaea;padding-right: 40px;">
+            @Html.Action("TicketTrackFacts", "Utility")
+        </div>
+        <div class="grid_5" style="height: 380px;float: left;background-color: #eaeaea;padding-right: 40px;padding-top: 50px;padding-left: 70px;">
+            @Html.Action("PollParticipationIndex", "Utility")
+        </div>
+    </div>
+
+    <div class="row clearfix">
+        <div class="grid_12">
+            <div class="gap clearfix custom-h10"> </div>
+        </div>
+    </div>
+
+
+
+    <div class="row clearfix">
+        <div class="grid_12">
+            <div class="gap clearfix custom-h10"></div>
+        </div>
+    </div>
+
+    <div class="row clearfix" >
+        <div class="grid_12" style=" border: 3px solid; margin-bottom: 25px; margin-top: 20px;height: 50px;">
+            <div class="gap clearfix custom-h30"></div>
+            <div class="breaking-news-bar" style="margin-left:25px;margin-top: -15px;">
+                <span class="title blink_me custom-color-icon6" style="margin-right: 30px;">@Resource.Resource.User_MessagesAndInformations</span>
+                <ul id="nt_1381119256" class="newst" style="color: black;direction:rtl;">
+                    @Html.Action("InformationBar", "Utility")
+                </ul>
+            </div>
+            <div class="gap clearfix custom-h30"></div>
+        </div>
+    </div>
+
+
+    <div class="row clearfix">
+        <div class="grid_12">
+            <div class="clearfix title-center">
+                <h2 class="col-title" style=" margin-bottom: 20px;">@Resource.Resource.User_LatestParliament</h2>
+            </div>
+            <div class="owl-carousel nav_side" id="poc_tt2">
+                @Html.Action("LatestParliament", "Utility", new { CategoryId = System.Configuration.ConfigurationManager.AppSettings["ParliamentId"] })
+            </div>
+        </div>
+    </div>
+
+    <div class="row clearfix" style="margin-top: 40px;">
+        <div class="grid_12">
+            <div class="action mbf style1 light clearfix" style="background-color:rgba(18, 182, 255, 0.67);border: 3px solid;height: 80px;">
+
+                <div class="TelegramBox">
+                    <a href="#" style="margin-right: 240px; border: none;height: 80px ">
+                        <img src="~/Content/UplodedImages/telegram.png" alt="telegram" style="width: 75px;height: 75px;margin-top: 3px;margin-left:10px;float: right;margin-right: 275px;" />
+                        <div class="matn">
+                            <h2>@Resource.Resource.User_TelegramLinkTitle</h2>
+                            <h5>@Resource.Resource.User_TelegramLinkDiscription</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+﻿@model BigMill.Models.PostCommentReplyModel
+@if (ViewBag.AddCommentReplySuccess != null)
+{
+    <div class="notification-box notification-box-success notif-anim" style="width:78%;">
+        <p><i class="icon-ok"></i>@ViewBag.AddCommentReplySuccess</p>
+    </div>
+}
+@if (ViewBag.AddCommentReplyFailed != null)
+{
+    <div class="notification-box notification-box-error notif-anim" style="width:78%;">
+        <p><i class="icon-remove-sign"></i>@ViewBag.AddCommentReplyFailed</p>
+    </div>
+}

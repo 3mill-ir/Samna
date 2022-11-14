@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BigMill.Models.TicketLogModel>
+
+<p>
+    @Html.ActionLink("Create New", "AddTicketLog")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Device)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedOnUTC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.F_TicketInbox_Id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Device)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedOnUTC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.F_TicketInbox_Id)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditTicketLog", new { TicketLogId = item.ID }) |
+            @Html.ActionLink("Delete", "DeleteTicketLog", new { TicketLogId = item.ID })
+        </td>
+    </tr>
+}
+
+</table>

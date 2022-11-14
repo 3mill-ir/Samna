@@ -1,0 +1,76 @@
+﻿@model BigMill.Models.PostCategoryModel
+@{
+    ViewBag.Title = "اضافه کردن شاخه ها";
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+@section js_Handler
+{
+    <script>
+        jQuery(document).ready(function () {
+            Main.init();
+        });
+    </script>
+}
+
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: UI BOOTSTRAP MODALS -->
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <!-- Default Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">@Resource.Resource.View_Danger</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        @Resource.Resource.View_AreYouShure
+                                    </div>
+                                    @using (Html.BeginForm())
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary btn-o" data-dismiss="modal">
+                                                @Resource.Resource.View_Close
+                                            </button>
+
+                                            <button type="submit" class="btn btn-danger">
+                                                @Resource.Resource.View_Yes
+                                                @Html.HiddenFor(model => model.ID)
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Default Modal -->
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="panel panel-transparent">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        @Resource.Resource.View_AreYouShure
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <p class="margin-bottom-30">
+                                        Toggle a modal by clicking the button below. It will slide down and fade in from the top of the page.
+                                    </p>
+                                    <button class="btn btn-danger btn-o pull-right" data-toggle="modal" data-target="#myModal">
+                                        @Resource.Resource.View_Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end: UI BOOTSTRAP MODALS -->
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5df0bc204f584373b7539ea14ce516e1" Name="Diagram1" ZoomLevel="87">
+        <EntityTypeShape EntityType="BigMillModel.PollAnswer" Width="1.5" PointX="10.5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.PollLog" Width="1.5" PointX="12.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.PollQuestion" Width="1.5" PointX="8.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.Post" Width="1.5" PointX="11" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.PostsCategory" Width="1.5" PointX="10" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.PostsComment" Width="1.5" PointX="13.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.PostsCommentsReply" Width="2.25" PointX="15.5" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.PostsSubCategory" Width="1.875" PointX="12.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.Tag" Width="1.5" PointX="7.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.Ticket" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.TicketInbox" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.TicketInboxMedia" Width="1.75" PointX="5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.TicketLog" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.TicketOutbox" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigMillModel.UserInformation" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="BigMillModel.FK_PollLog_PollAnswer" ManuallyRouted="false" />
+        <AssociationConnector Association="BigMillModel.FK_PollQuestion_UserInformation" ManuallyRouted="false" />
+        <AssociationConnector Association="BigMillModel.FK_Posts_PostsSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="BigMillModel.FK_Posts_UserInformation" ManuallyRouted="false" />
+        <AssociationConnector Association="BigMillModel.FK_PostsComments_Posts" ManuallyRouted="false" />
+        <AssociationConnector Association="BigMillModel.FK_PostsSubCategory_PostsCategory" ManuallyRouted="true" >
+          <ConnectorPoint PointX="11.5" PointY="20.561992687500002" />
+          <ConnectorPoint PointX="12.950311374890971" PointY="20.561992687500002" />
+          <ConnectorPoint PointX="12.950311374890971" PointY="19.811459312135419" />
+          <ConnectorPoint PointX="13.1875" PointY="19.811459312135419" />
+          <ConnectorPoint PointX="13.1875" PointY="19.441793619791667" />
+        </AssociationConnector>
+        <AssociationConnector Association="BigMillModel.FK_PostsCommentsReply_PostsComments" ManuallyRouted="false" />
+        <AssociationConnector Association="BigMillModel.FK_TicketInbox_Ticket" ManuallyRouted="false" />
+        <AssociationConnector Association="BigMillModel.FK_TicketInboxMedia_TicketInbox" ManuallyRouted="false" />
+        <AssociationConnector Association="BigMillModel.FK_TicketLog_TicketInbox" ManuallyRouted="false" />
+        <AssociationConnector Association="BigMillModel.FK_TicketOutbox_TicketInbox" ManuallyRouted="false" />
+        <AssociationConnector Association="BigMillModel.FK_TicketOutbox_UserInformation" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BigMillModel.Tags_Posts_Mapping" Width="1.5" PointX="13.25" PointY="11.5" />
+        <EntityTypeShape EntityType="BigMillModel.Tags_PostsCategory_Mapping" Width="2" PointX="17.625" PointY="15.75" />
+        <EntityTypeShape EntityType="BigMillModel.Tags_PostsSubCategory_Mapping" Width="2.625" PointX="15.25" PointY="19" />
+        <AssociationConnector Association="BigMillModel.FK_Tags_Posts_Mapping_Posts" />
+        <AssociationConnector Association="BigMillModel.FK_Tags_Posts_Mapping_Tags" />
+        <AssociationConnector Association="BigMillModel.FK_Tags_PostsCategory_Mapping_Tags" />
+        <AssociationConnector Association="BigMillModel.FK_Tags_PostsSubCategory_Mapping_Tags" />
+        <AssociationConnector Association="BigMillModel.FK_Tags_PostsCategory_Mapping_PostsCategory" />
+        <AssociationConnector Association="BigMillModel.FK_Tags_PostsSubCategory_Mapping_PostsSubCategory" />
+        <AssociationConnector Association="BigMillModel.FK_PollAnswer_PollQuestion" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

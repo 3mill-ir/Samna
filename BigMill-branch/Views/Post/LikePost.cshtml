@@ -1,0 +1,9 @@
+﻿@model BigMill.Models.PostModel
+@{
+    Layout = null;
+}
+  
+    <span><i class="icon-time"></i><a href="#">@Model.CreateDateUtcJalali</a></span>
+    <span><i class="icon-comments"></i> <a href="#" title="Comment on Mumblecore sapiente pork belly">@Model.NumberOfComments</a></span>
+    <span><i class="icon-thumbs-down"></i> <a href="#" title="Comment on Mumblecore sapiente pork belly">@Model.NumberOfDisLikes</a></span>
+    <span><i class="icon-thumbs-up"></i> <a href="#" title="Comment on Mumblecore sapiente pork belly">@Model.NumberOfLikes</a></span>

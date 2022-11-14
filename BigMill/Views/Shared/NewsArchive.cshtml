@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "NewsArchive";
+}
+@model BigMill.Models.Archive
+<h3 class="col-title">@Resource.Resource.User_Archive</h3><span class="liner"></span>
+@if (Model.Archives.Count > 0)
+{
+    <ul class="tt-accordion">
+        @for (int i = 0; i < Model.Archives.Count / 12; i++)
+        {
+            <li class="sub-accordion" style="border-bottom:none;margin-top: -40px;">
+                <div class="accordion-head">
+                    <div class="accordion-head-sign" style=" float: right;margin-right: -20px; margin-top: 20px;"></div>
+                    <p>سال @Model.Archives[i * 12].ShowingDate.Substring(7)</p>
+                </div>
+                @foreach (var item in Model.Archives)
+                {
+                    if (item.Year == Model.Archives[i * 12].Year)
+                    {
+                       <div class="accordion-content" style="margin-right: -15px;"><a href="@Url.Action("ListArchiveNews", "Archive", new { page = 1, PostSubCategoryId = Model.PostSubCategoryId, Start = item.Start, End = item.End, PostCategoryId = @ViewBag.NewsArchivePostCategoryId })">@item.ShowingDate</a></div>
+                    }
+                }
+            </li>
+        }
+    </ul>
+}

@@ -1,0 +1,49 @@
+﻿@model BigMill.Models.TelegramModel
+<div class="col-lg-8 col-lg-offset-2">
+    <fieldset>
+        <legend>
+            @Resource.Resource.Telegram_SendVoice<span class="symbol required"></span>
+    </legend>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <div class="note-editor">
+                        @Html.TextAreaFor(model => model.Caption, new { @class = "form-control autosize area-animated FixedColTextArea", placeholder = @Resource.Resource.Post_Content_One, @style = "height:85px; min-height:85px;  max-height:85px", maxlength = "190" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>
+                        ارسال صوت
+                    </label>
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-new thumbnail">
+                            <img src="~/Content/AdminContent/z3mill/Audio-File-icon.png" alt="">
+                        </div>
+                        <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                        <div class="user-edit-image-buttons">
+                            <span class="btn btn-azure btn-file">
+                                <span class="fileinput-new"><i class="fa fa-picture"></i> انتخاب صوت</span><span class="fileinput-exists"><i class="fa fa-picture"></i> تغییر</span>
+                                @Html.TextBoxFor(model => model.Path, new { type = "file" })
+                            </span>
+                            <a href="#" class="btn fileinput-exists btn-red" data-dismiss="fileinput">
+                                <i class="fa fa-times"></i> حذف
+                            </a>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Path)
+                </div>
+                </div>
+        </div>
+        <div style="text-align:center">
+            <button type="button" class="btn btn-wide btn-dark-green ladda-button " data-style="contract" onclick="TelegramMedia_Submit('SendVoice')">
+                <span class="ladda-label">ارسال به تلگرام</span>
+            </button>
+
+        </div>
+
+</fieldset>
+
+
+    </div>

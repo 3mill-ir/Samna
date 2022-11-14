@@ -1,0 +1,147 @@
+﻿@model BigMill.Models.PollQuestionModel
+@using BigMill.Models;
+@{
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+@section CSS_Requested{
+    <link href="~/Content/AdminContent/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/AdminContent/vendor/select2/select2.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="~/Content/AdminContent/vendor/jquery-file-upload/css/jquery.fileupload-ui.css">
+
+    <link rel="stylesheet" href="~/Content/DateTimePicker/jquery.Bootstrap-PersianDateTimePicker.css" />
+<link href="~/Content/AdminContent/vendor/ladda-bootstrap/ladda-themeless.min.css" rel="stylesheet" media="screen">
+
+}
+@section js_Requested{
+    <script src="~/Content/AdminContent/vendor/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="~/CKFinderScripts/ckfinder.js"></script>
+    <script src="~/Content/AdminContent/vendor/ckeditor/adapters/jquery.js"></script>
+    <script src="~/Content/AdminContent/vendor/maskedinput/jquery.maskedinput.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/autosize/autosize.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/selectFx/classie.js"></script>
+    <script src="~/Content/AdminContent/vendor/selectFx/selectFx.js"></script>
+    <script src="~/Content/AdminContent/vendor/select2/select2.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Content/AdminContent/vendor/ladda-bootstrap/spin.min.js"></script>
+<script src="~/Content/AdminContent/vendor/ladda-bootstrap/ladda.min.js"></script>
+
+}
+
+@section js_Handler{
+
+    <script src="~/Content/AdminContent/assets/js/form-text-editor.js"></script>
+    <script src="~/Content/AdminContent/assets/js/form-elements.js"></script>
+<script src="~/Content/AdminContent/assets/js/ui-buttons.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Main.init();
+            TextEditor.init();
+            FormElements.init();
+            UIButtons.init();
+        });
+    </script>
+    <script>
+        var ArrayIndex = @Model.AnswerBoxes.Count;
+        var AnswersIndex =ArrayIndex+1;
+        $(document).ready(function () {
+            $("#AppendBtn").click(function () {
+                $("#AppendedAnswers").append("<div class=\"form-group\"><label for=\"\">گزینه " + AnswersIndex + "</label><input class=\"form-control autosize area-animated\" data-val=\"true\" data-val-required=\"فیلد مورد نظر را تکمیل کنید\" name=\"AnswerBoxes[" + ArrayIndex + "].AnswerText\" placeholder=\"خلاصه پست\" type=\"text\" value=\"\"></input><span class=\"field-validation-valid\" data-valmsg-for=\"AnswerBoxes[" + ArrayIndex + "].AnswerText\" data-valmsg-replace=\"true\"></span></div>");
+                ArrayIndex++;
+                AnswersIndex++;
+            });
+        });
+    </script>
+    <script src="~/Content/DateTimePicker/jalaali.js" type="text/javascript"></script>
+    <script src="~/Content/DateTimePicker/jquery.Bootstrap-PersianDateTimePicker.js" type="text/javascript"></script>
+}
+
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+        @Html.Partial("PageTittle")
+        <!-- end: PAGE TITLE -->
+        @using (Html.BeginForm("EditPollQuestion", "Poll", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+                       @Html.HiddenFor(model => model.ID)
+            <div class="container-fluid container-fullw bg-white">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row margin-top-30">
+                            <div class="col-lg-6 col-md-12">
+                                <fieldset>
+                                    <legend>
+                                        @Resource.Resource.View_Poll<span class="symbol required"></span>
+                                    </legend>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Question)
+                                        <div class="note-editor">
+                                            @Html.TextAreaFor(model => model.Question, new { @class = "form-control autosize area-animated FixedColTextArea", placeholder = @Resource.Resource.PollQuestion_Question, @style = "height:85px; min-height:85px;  max-height:85px", maxlength = "190" })
+                                            @Html.ValidationMessageFor(model => model.Question)
+                                        </div>
+                                        @for (int i = 0; i < Model.AnswerBoxes.Count; i++)
+                                        {
+                                            <div class="form-group">
+                                                @Html.Label("گزینه " + (i + 1))
+                                                @Html.TextBoxFor(model => model.AnswerBoxes[i].AnswerText, new { @class = "form-control autosize area-animated", placeholder = @Resource.Resource.PollAnswer_Text })
+                                                @Html.ValidationMessageFor(model => model.AnswerBoxes[i].AnswerText)
+                                                @Html.HiddenFor(model => model.AnswerBoxes[i].AnswerKey)
+                                                @Html.HiddenFor(model => model.AnswerBoxes[i].ID)
+                                            </div>
+                                        }
+                                        <div id="AppendedAnswers">
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                                <a id="AppendBtn" class="btn btn-wide btn-primary" href="#/"><i class="glyphicon glyphicon-plus span1"></i> @Resource.Resource.View_MoreAnswers</a>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <fieldset>
+                                    <legend>
+                                        @Resource.Resource.View_Date<span class="symbol required"></span>
+                                    </legend>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.StartDateOnUTC)
+                                            @Html.ValidationMessageFor(model => model.StartDateOnUTC)
+                                            <div class="input-group">
+                                                <div class="input-group-addon" data-disablebeforetoday="true" data-mddatetimepicker="true" data-targetselector="#exampleInput1" data-trigger="click" data-enabletimepicker="true" data-mdpersiandatetimepicker="" data-mdformat="yyyy/MM/dd HH:mm:ss" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1395,&quot;Month&quot;:6,&quot;Day&quot;:13,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" style="cursor: pointer;" data-original-title="" title="" data-mdpersiandatetimepickershowing="false">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.StartDateOnUTC, new { @class = "form-control", id = "exampleInput1", placeholder = @Resource.Resource.View_FromDate })
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.EndDateOnUTC)
+                                            @Html.ValidationMessageFor(model => model.EndDateOnUTC)
+                                            <div class="input-group">
+                                                <div class="input-group-addon" data-disablebeforetoday="true" data-mddatetimepicker="true" data-targetselector="#exampleInput2" data-trigger="click" data-enabletimepicker="true" data-mdpersiandatetimepicker="" data-mdformat="yyyy/MM/dd HH:mm:ss" data-mdpersiandatetimepickerselecteddatetime="{&quot;Year&quot;:1395,&quot;Month&quot;:6,&quot;Day&quot;:13,&quot;Hour&quot;:0,&quot;Minute&quot;:0,&quot;Second&quot;:0}" style="cursor: pointer;" data-original-title="" title="" data-mdpersiandatetimepickershowing="false">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.EndDateOnUTC, new { @class = "form-control", id = "exampleInput2", placeholder = @Resource.Resource.View_ToDate })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div style="text-align:center">
+                                    <button type="submit" class="btn btn-wide btn-dark-green ladda-button " data-style="contract" id="PipoSubmit">
+                                        <span class="ladda-label">@Resource.Resource.Submit</span>
+                                    </button>
+                                    <div class="center text-danger ">
+                                        @ViewBag.DateConflict
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

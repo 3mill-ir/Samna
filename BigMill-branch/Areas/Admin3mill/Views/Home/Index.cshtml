@@ -1,0 +1,371 @@
+﻿@{
+
+    Layout = "~/Areas/Admin3mill/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .disabledddd a {
+        pointer-events: none;
+        cursor: default;
+        display: none;
+    }
+
+    .disabledddd table {
+        height: 17px;
+    }
+</style>
+@section js_Requested{
+    <script src="~/Content/AdminContent/vendor/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="~/CKFinderScripts/ckfinder.js"></script>
+    <script src="~/Content/AdminContent/vendor/ckeditor/adapters/jquery.js"></script>
+    <script src="~/Content/AdminContent/vendor/Chart.js/Chart.min.js"></script>
+    <script src="~/Content/AdminContent/vendor/jquery.sparkline/jquery.sparkline.min.js"></script>
+}
+@section js_Handler{
+    <script src="~/Content/AdminContent/assets/js/form-text-editor.js"></script>
+    <script type="text/javascript">
+
+        var duration = 0;
+        var delay = 0;
+        var year = '@DateTime.Now.Year';
+        var month = '@DateTime.Now.Month';
+        var day = '@DateTime.Now.Day';
+        var hour = '@DateTime.Now.Hour';
+        var minute = '@DateTime.Now.Minute';
+        var second = '@DateTime.Now.Second';
+        var millisecond = '@DateTime.Now.Millisecond';
+        function drawClock(drawPlace, timestamp) {
+            var canvas = document.getElementById(drawPlace),
+                context = canvas.getContext("2d"),
+                centerX = canvas.width / 2,
+                centerY = canvas.height / 2,
+                radius = canvas.width / 2 - 20;
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.lineCap = "round";
+            context.beginPath();
+            context.arc(centerX, centerY, radius - 10, 0, 2 * Math.PI, false);
+            context.fillStyle = '#ccc';
+            context.fill();
+            context.closePath();
+            context.restore();
+
+            context.beginPath();
+            context.arc(centerX, centerY, radius - 14, 0, 2 * Math.PI, false);
+            context.fillStyle = '#fff';
+            context.fill();
+            context.closePath();
+            context.restore();
+
+            // Center Circle
+            context.beginPath();
+            context.arc(centerX, centerY, 4, 0, 2 * Math.PI, false);
+            context.lineWidth = 3;
+            context.strokeStyle = '#555';
+            context.stroke();
+            context.closePath();
+            context.restore();
+
+            context.translate(centerX, centerY);
+
+            context.fillStyle = '#555';
+            context.font = radius * 0.18 + "px SDF";
+            context.textBaseline = "middle";
+            context.textAlign = "center";
+            for (num = 0; num < 12; num++) {
+                ang = (num + 1) * Math.PI / 6;
+                context.rotate(ang);
+                context.translate(0, -radius * 0.60);
+                context.rotate(-ang);
+                context.fillText((num + 1).toString(), 0, 0);
+                context.rotate(ang);
+                context.translate(0, radius * 0.60);
+                context.rotate(-ang);
+            }
+
+            for (var i = 1; i <= 60; i++) {
+                angle = Math.PI / 30 * i;
+                sineAngle = Math.sin(angle);
+                cosAngle = -Math.cos(angle);
+
+                if (i % 5 == 0) {
+                    context.lineWidth = 2;
+                    iPointX = sineAngle * (radius - 25);
+                    iPointY = cosAngle * (radius - 25);
+                    oPointX = sineAngle * (radius - 20);
+                    oPointY = cosAngle * (radius - 20);
+                } else {
+                    context.lineWidth = 0.8;
+                    iPointX = sineAngle * (radius - 22);
+                    iPointY = cosAngle * (radius - 22);
+                    oPointX = sineAngle * (radius - 20);
+                    oPointY = cosAngle * (radius - 20);
+                }
+
+                context.beginPath();
+                context.moveTo(iPointX, iPointY);
+                context.lineTo(oPointX, oPointY);
+                context.stroke();
+            }
+
+            var now = timestamp,
+
+                hrs = now.getHours(),
+                min = now.getMinutes(),
+                sec = now.getSeconds();
+
+            // Set Hands Variables
+            var sangle = (Math.PI / 30 * sec),
+                sPointX = Math.sin(sangle) * (radius - 50),
+                sPointY = -Math.cos(sangle) * (radius - 50);
+
+            // Draw seconds hand
+            context.beginPath();
+            context.lineWidth = 2;
+            context.moveTo(0, 0);
+            context.strokeStyle = "#f00";
+            context.lineTo(sPointX, sPointY);
+            context.stroke();
+            context.closePath();
+
+            // Draw minutes hand
+            context.beginPath();
+            context.lineWidth = 4;
+            context.strokeStyle = "#555555";
+            sangle = (Math.PI / 30 * (min + (sec / 60)));
+            sPointX = Math.sin(sangle) * (radius - 48);
+            sPointY = -Math.cos(sangle) * (radius - 48);
+            context.moveTo(0, 0);
+            context.lineTo(sPointX, sPointY);
+            context.stroke();
+            context.closePath();
+
+            // Draw hours hand
+            context.beginPath();
+            context.lineWidth = 6;
+            context.strokeStyle = "#555555";
+            sangle = (Math.PI / 6 * (hrs + (min / 65) + (sec / 3600)));
+            sPointX = Math.sin(sangle) * (radius - 65);
+            sPointY = -Math.cos(sangle) * (radius - 65);
+            context.moveTo(0, 0);
+            context.lineTo(sPointX, sPointY);
+            context.stroke();
+            context.closePath();
+
+            context.restore();
+            context.translate(-centerX, -centerY);
+        }
+
+        setInterval(function () {
+            $("#canvasClock").css("visibility", 'visible');
+            var d = new Date(year, month, day, hour, minute, second, millisecond);
+            d.setSeconds(d.getSeconds() + duration + delay);
+
+            drawClock('analogClock', d);
+
+            duration = duration + 1;
+
+            var hh = d.getHours();
+            var m = d.getMinutes();
+            var s = d.getSeconds();
+
+            var dd = "AM";
+            var h = hh;
+
+            if (h >= 12) {
+                h = hh - 12;
+                dd = "PM";
+            }
+
+            if (h == 0) {
+                h = 12;
+            }
+
+            m = m < 10 ? "0" + m : m;
+            s = s < 10 ? "0" + s : s;
+            h = h < 10 ? "0" + h : h;
+        }, 1000);
+
+
+        function showLoadingClock() {
+            $('#canvasClock').fadeTo("slow", 0.33);
+        }
+
+        function hideLoadingClock() {
+            $('#canvasClock').fadeTo("slow", 1);
+        }
+    </script>
+    <script>
+
+        jQuery(document).ready(function () {
+            Main.init();
+            TextEditor.init();
+       
+        });
+
+     
+    </script>
+    @{
+        if (this.ViewContext.HttpContext.Items["piporesult"] != null)
+        {
+            <script>
+                var ScoreResult = [];
+
+                @foreach (var p in this.ViewContext.HttpContext.Items["piporesult"] as List<string[]>)
+         {
+
+                     <text>
+                ScoreResult.push({
+                    value: "@p[0]",
+                    color: "@p[1]",
+                    highlight: "@p[2]",
+                    label: "@p[3]"
+                });
+
+                </text>
+
+                }
+                function getRandomColor() {
+                    var letters = '0123456789ABCDEF';
+                    var color = '#';
+                    for (var i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+
+
+                //var $jq = jQuery.noConflict();
+                jQuery(document).ready(function () {
+                    Charts2.init();
+                });
+                var Charts2 = function () {
+                    "use strict";
+
+                    var pieChartHandler = function () {
+                        // Chart.js Data
+                        var data2 = ScoreResult;
+                        // Chart.js Options
+                        var options2 = {
+
+                            // Sets the chart to be responsive
+                            responsive: false,
+
+                            //Boolean - Whether we should show a stroke on each segment
+                            segmentShowStroke: true,
+
+                            //String - The colour of each segment stroke
+                            segmentStrokeColor: '#fff',
+
+                            //Number - The width of each segment stroke
+                            segmentStrokeWidth: 2,
+
+                            //Number - The percentage of the chart that we cut out of the middle
+                            percentageInnerCutout: 0, // This is 0 for Pie charts
+
+                            //Number - Amount of animation steps
+                            animationSteps: 100,
+
+                            //String - Animation easing effect
+                            animationEasing: 'easeOutBounce',
+
+                            //Boolean - Whether we animate the rotation of the Doughnut
+                            animateRotate: true,
+
+                            //Boolean - Whether we animate scaling the Doughnut from the centre
+                            animateScale: false,
+
+                            //String - A legend template
+                            legendTemplate: '<ul style="list-style:none;" class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li style="width: 200px;font-size:20px;" ><span style="background-color:<%=segments[i].fillColor%>;width: 15px;height: 15px;margin-left: 10px;display: inline-block;"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+
+
+                        };
+
+                        // Get context with jQuery - using jQuery's .get() method.
+                        var ctx2 = $("#pieChart").get(0).getContext("2d");
+                        // This will get the first returned node in the jQuery collection.
+                        var pieChart2 = new Chart(ctx2).Pie(data2, options2);
+                        //generate the legend
+                        var legend2 = pieChart2.generateLegend();
+                        //and append it to your page somewhere
+                        $('#pieLegend').append(legend2);
+                    };
+                    return {
+                        init: function () {
+                            pieChartHandler();
+                        }
+                    };
+                }();
+
+            </script>
+        }
+    }
+
+}
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <div class="container-fluid container-fullw padding-bottom-10">
+            <!-- start: Widgets -->
+            <div class="row margin-bottom-15">
+                <div class="col-lg-2">
+                    <script type="text/javascript" language="javascript" src="http://pIchAk.net/blogcod/oghat/white.php"></script>
+                    <script language="javascript">var CurrentDate = new Date(); var JAT = 1; function pz() { }; init(); document.getElementById("cities").selectedIndex = 12; coord(); main();</script>
+                </div>
+                <div class="col-lg-4">
+                    <div id="ctl00_cphTop_pnl10cphTop_3551">
+                        <div class="inner ">
+                            <div id="canvasClock">
+                                <canvas class="canvas center-block" id="analogClock" width="250" height="250" style="margin-top: -30px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-white no-radius" style="height: 195px;">
+                        <div class="panel-heading border-bottom">
+                            <h4 style="float:right;" class="panel-title">آمار بازدید</h4>
+                            <ul class="panel-heading-tabs border-light">
+                                <li>
+                                    <div class="pull-right">
+                                        <a href="@Url.Action("ListPollQuestion", "Poll")" type="button" class="btn bg-dark-blue">
+                                            @Resource.Resource.View_PollManagement
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="ti-reload"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!-- end: Widgets -->
+@if (User.IsInRole("Developer") || User.IsInRole("Admin") || User.IsInRole("Author"))
+                {
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                @Html.Action("LastCommentsReplies", "Utility")
+                            </div>
+                            <div class="col-lg-5">
+                                @Html.Action("ActivePoll", "Utility")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+}
+                @if (User.IsInRole("Developer") || User.IsInRole("Admin") || User.IsInRole("Expert"))
+                {
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @Html.Action("ListTicketInbox", "Utility")
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+

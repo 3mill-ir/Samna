@@ -1,0 +1,456 @@
+﻿<!DOCTYPE html>
+<!--[if IE 7 ]><html class="ie7" lang="en-US"><![endif]-->
+<!--[if IE 8 ]><html class="ie8" lang="en-US"><![endif]-->
+<!--[if IE 9 ]><html class="ie9" lang="en-US"><![endif]-->
+<!--[if (gte IE 10)|!(IE)]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+    <!-- Basic Page Needs -->
+    <meta charset="UTF-8">
+
+    <title> @ViewBag.Title | @Resource.Resource.User_View_Tittle</title>
+    <meta name="description" content="@Resource.Resource.View_User_Description" />
+    <meta name="author" content="@Resource.Resource.View_Author" />
+    @{
+        string AllTags = "سامنا , پیرانشهر , سردشت , ارومیه , آذربایجان غربی , سامانه ارتباطات مردمی آنلاین نمایندگان , دکتر رسول خضری ,";
+        if (ViewBag.pipTags != null)
+        {
+            foreach (var p in @ViewBag.pipTags as List<BigMill.Models.TagSelectModel>)
+            {
+                AllTags = AllTags+" , " + p.TagText;
+            }
+        }
+    }
+    <meta name="keywords" content="@AllTags" />
+
+    <!-- Mobile Specific Metas -->
+    @*<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">*@
+
+    <!-- Favicons -->
+    <link href="~/Content/UserContent/images/favicon.ico" rel="shortcut icon" />
+
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Marcellus:400,400italic,700,700italic%7CMarcellus:400,400italic,700,700italic%7CMarcellus:400,400italic,700,700italic%7CMarcellus:400,400italic,700,700italic%7CMarcellus:400,400italic,700,700italic%7CMarcellus:400,400italic,700,700italic%7CPT+Sans:400,400italic,700,700italic%7CPT+Sans:400,400italic,700,700italic%7C' rel='stylesheet' type='text/css'>
+    <!-- Stylesheets -->
+    @*<link rel='stylesheet' id='stylesheet-css' href='~/Content/UserContent/css/style.css?ver=1.1' type='text/css' media='all' />
+    <link rel='stylesheet' id='icons-css' href='~/Content/UserContent/css/icons.css?ver=1.0' type='text/css' media='all' />
+    <link rel='stylesheet' id='animate-css' href='~/Content/UserContent/css/animate.css?ver=1.0' type='text/css' media='all' />
+    <link rel='stylesheet' id='shortcodes' href='~/Content/UserContent/css/shortcodes.css?ver=4.3.2' type='text/css' media='all' />
+    <!-- Responsive CSS -->
+    <!-- Custom CSS -->
+    <link rel='stylesheet' id='custom-css' href='~/Content/UserContent/css/custom-styles.css' type='text/css' media='all' />
+    <!-- RTL CSS -->
+    <link rel='stylesheet' id='rtl-css' href='~/Content/UserContent/css/rtl.css' type='text/css' media='all' />*@
+    @Styles.Render("~/Content/pipoCSS")
+    @RenderSection("CSS_Requested", required: false)
+</head>
+
+
+<body class="home page tt_responsive">
+
+    <div id="home">
+
+        <div id="layout" class="boxed-margin ">
+
+            <header id="header" class="header_v1">
+                <!-- Start extrabox -->
+                <!-- end extrabox -->
+                <!-- Start head -->
+                <div class="head" style="background-image:url(../../../Content/UserContent/z3mill/banner.jpg);background-repeat:no-repeat;height: 130px;">
+
+                </div><!-- End head -->
+                <!--Start headdown -->
+                <div class="headdown ">
+
+                    <div class="row clearfix">
+
+                        <!-- Menu -->
+                        @Html.Action("Menu", "Utility")
+                        <!-- /Menu -->
+                        <!-- Start search -->
+                        @Html.Action("Search", "Utility")
+                        <!-- End search -->
+
+                    </div><!-- row -->
+
+                </div><!--End headdown -->
+
+            </header>
+            <!-- end header -->
+            <!-- Start breadcrumb -->
+            @RenderSection("BreadCrumb", required: false)
+            <!-- End breadcrumb -->
+            <!--Start SLIDER -->
+            @RenderSection("Slider", required: false)
+            <!--End SLIDER -->
+            <!-- container -->
+            <!-- start page-content -->
+            @RenderBody()
+            <!-- end page-content -->
+
+            <footer id="footer">
+
+                <div class="row clearfix">
+
+                    <div id="text-6" class="footer_widget widget_text grid_3">
+                        <h3 class="col-title">@Resource.Resource.Footer_Links</h3>
+                        <span class="liner"></span>
+                        <div class="textwidget">
+                            <ul style="list-style:circle;margin-right: 15px;">
+                                <li>
+                                    <a href="http://rc.majlis.ir/fa/parliament_member/show/811830">مرکز پژوهشهای مجلس/معرفی و فعالیت های دکتر خضری</a>
+                                </li>
+                                <li>
+                                    <a href="http://ostan-ag.gov.ir/">استانداری آذربایجان غربی</a>
+                                </li>
+                                <li>
+                                    <a href="http://odvcw.org/">انجمن دفاع از حقوق مصدومین شیمیایی سردشت</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.kurdpayam.ir/">پایگاه تحلیلی خبری کردپیام پیرانشهر</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.kurdpress.com/fa/">خبرگزاری بین المللی کردپرس</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.ziryan.ir/Default.aspx">آژانس خبری تحلیلی زریان</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.javanpress.ir/">وب سایت خبری تحلیلی حوان پرس</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.bolfat.ir/">پایگاه خبری تحلیلی بلفت سردشت</a>
+                                </li>
+                                <li>
+                                    <a href="http://payannews.ir/">پایگاه خبری، تحلیلی پایان نیوز</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.piranshahr-iau.ac.ir/">دانشگاه آزاد اسلامی واحد پیرانشهر</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="official_embed-4" class="footer_widget widget_official_embed grid_3">
+                        <!-- Begin ToolsIR.com counter code -->
+                        <script type="text/javascript" src="http://counter.toolsir.com/secure.js"></script>
+                        <script type="text/javascript">
+                            var _torder = 'today,yesterdayuser,month,year,mostviewed,total,online,link&color=FFFFFF,323436,BCE3FD&visit=0&pic=0&width=120';
+                            var _turl = '@System.Configuration.ConfigurationManager.AppSettings["WebSiteURL"]';
+                            _tCounter(_torder, _turl);
+                        </script><div style="display:none;"><h2><a href="http://www.toolsir.com/">دریافت کد آمارگیر سایت</a></h2></div>
+                        <!-- End ToolsIR.com counter code -->
+                        @*<h3 class="col-title">@Resource.Resource.Footer_ViewerFacts</h3>
+                        <span class="liner"></span>
+                        <div class="embed">
+                            <table cellpadding="0" cellspacing="0" width="80%" border="0" align="center" style="margin-right: 25px;">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span id="ucNodeView_ctl00_Statistics_ctl03_ctl02_lblOnlineUserCount">کاربران آنلاین</span>
+                                        </td>
+                                        <td style="text-align: left">
+                                            25
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span id="ucNodeView_ctl00_Statistics_ctl03_ctl02_lblTodayVisit">امروز</span>
+                                        </td>
+                                        <td style="text-align: left">
+                                            568
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span id="ucNodeView_ctl00_Statistics_ctl03_ctl02_lblYesterdayVisit">دیروز</span>
+                                        </td>
+                                        <td style="text-align: left">
+                                            1145
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span id="ucNodeView_ctl00_Statistics_ctl03_ctl02_lblThisMonthVisit">ماه جاری</span>
+                                        </td>
+                                        <td style="text-align: left">
+                                            13710
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span id="ucNodeView_ctl00_Statistics_ctl03_ctl02_lblThisYearVisit">سال جاری</span>
+                                        </td>
+                                        <td style="text-align: left">
+                                            71152
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span id="ucNodeView_ctl00_Statistics_ctl03_ctl02_lblTotalVisit">از ابتدا</span>
+                                        </td>
+                                        <td style="text-align: left">
+                                            399165
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span id="ucNodeView_ctl00_Statistics_ctl03_ctl02_lblPageVisitTimes">صفحه جاری</span>
+                                        </td>
+                                        <td style="text-align: left">
+                                            73768
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>*@
+                    </div>
+
+                    <div id="official_portfolio-4" class="footer_widget widget_official_portfolio grid_3">
+                        @Html.Action("FooterImageGallery", "Utility")
+                    </div>
+
+                    <div class="footer_widget widget_official_contact grid_3">
+                        <h3 class="col-title">@Resource.Resource.Footer_ContactUs</h3>
+                        <span class="liner"></span>
+                        <div class="address">
+                            <p>پیرانشهر : خیابان پزشک، روبروی ساختمان کمیته امداد امام خمینی(ره)</p>
+                            <p style="margin-top: -25px;"> <i class="icon-phone icon-xs"></i>تلفکس : 04444229140</p>
+                            <p style="margin-top: -25px;"><i class="icon-user icon-xs"></i>مسول دفتر آقای علی سیار</p>
+                            <p style="margin-top: -15px;">سردشت : ساختمان جهاد کشاورزی- طبقه همکف</p>
+                            <p style="margin-top: -25px;"> <i class="icon-phone icon-xs"></i>تلفکس : 04444323103</p>
+                            <p style="margin-top: -25px;"><i class="icon-user icon-xs"></i>مسول دفتر آقای ابراهیمی</p>
+                        </div>
+                    </div>
+
+                </div><!-- row -->
+
+                <div class="footer-last row mtf clearfix center">
+                    <a href="http://Hezareyesevom.ir" target="_blank">
+                        <span class="copyright center">
+                            <span>@Resource.Resource.CMS_Name</span>
+                            &copy; <span class="current-year">@DateTime.Now.Year</span>
+                        </span>
+                    </a>
+                </div><!-- end last footer -->
+
+            </footer><!-- end footer -->
+
+        </div><!-- end layout -->
+
+    </div><!-- end frame -->
+
+    <div id="toTop"><i class="icon-angle-up"></i></div><!-- Back to top -->
+    <!-- Start Javascripts -->
+    @*<script type='text/javascript' src='~/Content/UserContent/js/jquery/jquery.js?ver=1.11.0'></script>
+    <script type='text/javascript' src='~/Content/UserContent/js/themetor.js?ver=1.0'></script>
+    <script type='text/javascript' src='~/Content/UserContent/js/tt_composer_front.js?ver=4.3.2'></script>
+    <script type='text/javascript' src='~/Content/UserContent/js/jquery.prettyPhoto.js?ver=3.1.6'></script>
+    <script type='text/javascript' src='~/Content/UserContent/js/jquery.flexslider-min.js?ver=2.1'></script>
+    <script type='text/javascript' src='~/Content/UserContent/js/jquery.jplayer.min.js?ver=2.4.0'></script>
+    <script type='text/javascript' src='~/Content/UserContent/js/custom.js?ver=1.0'></script>
+    <script type='text/javascript' src='~/Content/UserContent/js/jquery.li-scroller.1.0.js?ver=4.0'></script>*@
+    @Scripts.Render("~/Content/pipoJS")
+    <script language="javascript">
+
+        jQuery(document).ready(function ($) {
+            // News Ticker /////////////////////////////
+            try {
+                jQuery("ul#nt_1381119256").liScroll({ travelocity: 0.09 });
+            } catch (e) { }
+        });
+    </script>
+    @RenderSection("js_Requested", required: false)
+    <script src="~/Content/AdminContent/vendor/Chart.js/Chart.min.js"></script>
+    @{
+
+        if (this.ViewContext.HttpContext.Items["TicketTrackFacts"] != null)
+        {
+            <script>
+                var ScoreResult2 = [];
+                @foreach (var rt in this.ViewContext.HttpContext.Items["TicketTrackFacts"] as List<string[]>)
+            {
+               <text>
+                ScoreResult2.push({
+                    label: "@rt[0]",
+                    value: "@rt[1]",
+                    color: "@rt[2]",
+                    highlight: "@rt[3]"
+                });
+                </text>
+}
+                var $jtt = jQuery.noConflict();
+                jQuery(document).ready(function () {
+                    Charts2.init();
+                });
+
+                var Charts2 = function () {
+                    "use strict";
+
+                    var pieChartHandler2 = function () {
+                        // Chart.js Data
+                        var data2 = ScoreResult2;
+                        // Chart.js Options
+                        var options2 = {
+
+                            // Sets the chart to be responsive
+                            responsive: false,
+
+                            //Boolean - Whether we should show a stroke on each segment
+                            segmentShowStroke: true,
+
+                            //String - The colour of each segment stroke
+                            segmentStrokeColor: '#fff',
+
+                            //Number - The width of each segment stroke
+                            segmentStrokeWidth: 2,
+
+                            //Number - The percentage of the chart that we cut out of the middle
+                            percentageInnerCutout: 0, // This is 0 for Pie charts
+
+                            //Number - Amount of animation steps
+                            animationSteps: 100,
+
+                            //String - Animation easing effect
+                            animationEasing: 'easeOutBounce',
+
+                            //Boolean - Whether we animate the rotation of the Doughnut
+                            animateRotate: true,
+
+                            //Boolean - Whether we animate scaling the Doughnut from the centre
+                            animateScale: false,
+
+                            //String - A legend template
+                            legendTemplate: '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li style="width: 300px;font-size: 16px;margin-bottom: 15px;"><span style="background-color:<%=segments[i].fillColor%>;width: 15px;height: 15px;margin-left: 10px;display: inline-block;"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+
+                        };
+
+                        // Get context with jQuery - using jQuery's .get() method.
+                        var ctx2 = $jtt("#pieChart2").get(0).getContext("2d");
+                        // This will get the first returned node in the jQuery collection.
+                        var pieChart2 = new Chart(ctx2).Pie(data2, options2);
+                        //generate the legend
+                        var legend2 = pieChart2.generateLegend();
+                        //and append it to your page somewhere
+                        $jtt('#pieLegend2').append(legend2);
+                    };
+                    return {
+                        init: function () {
+                            pieChartHandler2();
+                        }
+                    };
+                }();
+
+            </script>
+        }
+    }
+    @{
+        if (this.ViewContext.HttpContext.Items["piporesult"] != null)
+        {
+            <script>
+                var ScoreResult = [];
+                @foreach (var p in this.ViewContext.HttpContext.Items["piporesult"] as List<string[]>)
+            {
+               <text>
+                ScoreResult.push({
+                    value: "@p[0]",
+                    color: "@p[1]",
+                    highlight: "@p[2]",
+                    label: "@p[3]"
+                });
+                </text>
+}
+                function getRandomColor() {
+                    var letters = '0123456789ABCDEF';
+                    var color = '#';
+                    for (var i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+
+
+                var $jq = jQuery.noConflict();
+                var $jtt = jQuery.noConflict();
+                jQuery(document).ready(function () {
+                    Charts.init();
+                });
+                var Charts = function () {
+                    "use strict";
+
+                    var pieChartHandler = function () {
+                        // Chart.js Data
+                        var data = ScoreResult;
+                        // Chart.js Options
+                        var options = {
+
+                            // Sets the chart to be responsive
+                            responsive: false,
+
+                            //Boolean - Whether we should show a stroke on each segment
+                            segmentShowStroke: true,
+
+                            //String - The colour of each segment stroke
+                            segmentStrokeColor: '#fff',
+
+                            //Number - The width of each segment stroke
+                            segmentStrokeWidth: 2,
+
+                            //Number - The percentage of the chart that we cut out of the middle
+                            percentageInnerCutout: 0, // This is 0 for Pie charts
+
+                            //Number - Amount of animation steps
+                            animationSteps: 100,
+
+                            //String - Animation easing effect
+                            animationEasing: 'easeOutBounce',
+
+                            //Boolean - Whether we animate the rotation of the Doughnut
+                            animateRotate: true,
+
+                            //Boolean - Whether we animate scaling the Doughnut from the centre
+                            animateScale: false,
+
+                            //String - A legend template
+                            legendTemplate: '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>;width: 10px;height: 10px;margin-left: 10px;display: inline-block;"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+
+                        };
+
+                        // Get context with jQuery - using jQuery's .get() method.
+                        var ctx = $jq("#pieChart").get(0).getContext("2d");
+                        // This will get the first returned node in the jQuery collection.
+                        var pieChart = new Chart(ctx).Pie(data, options);
+                        ;
+                        //generate the legend
+                        var legend = pieChart.generateLegend();
+                        //and append it to your page somewhere
+                        $jq('#pieLegend').append(legend);
+                    };
+
+
+                    return {
+                        init: function () {
+                            pieChartHandler();
+                        }
+                    };
+                }();
+
+            </script>
+        }
+    }
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-86396896-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    <!-- End Javascripts -->
+</body>
+</html>

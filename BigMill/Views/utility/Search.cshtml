@@ -1,0 +1,7 @@
+﻿@using (Html.BeginForm("SearchResult", "Search", FormMethod.Post))
+{
+    <div class="search">
+        <input style="font-size:15px;" id="s" name="SearchBox" type="text" onfocus="if (this.value == '@Resource.Resource.User_StartSearch') this.value = '';" onblur="if (this.value=='') this.value = '@Resource.Resource.User_StartSearch';" value="@Resource.Resource.User_StartSearch" placeholder="@Resource.Resource.User_StartSearch">
+        <button type="submit"><i class="icon-search"></i></button>
+    </div>
+}
